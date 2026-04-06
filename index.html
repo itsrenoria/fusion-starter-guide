@@ -245,6 +245,30 @@ body::after {
 .co b { color:var(--w2); font-weight:600; }
 .co.accent { }
 
+.pv { margin-top:18px; }
+.pv-toggle {
+  margin-top:0; cursor:pointer; border:0;
+  transition:transform .2s ease, opacity .2s ease;
+}
+.pv-toggle:hover { transform:translateY(-1px); opacity:.94; }
+.pv-body {
+  display:none; margin-top:14px; padding:18px; border:1px solid var(--line);
+  border-radius:10px; background:rgba(255,255,255,.02);
+}
+.pv.open .pv-body { display:block; }
+.pv-shot {
+  display:block; border-radius:10px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  transition:border-color .2s, transform .2s;
+}
+.pv-shot:hover { border-color:var(--line-h); transform:translateY(-1px); }
+.pv-shot img {
+  width:100%; height:auto; display:block;
+}
+.pv-cap {
+  margin-top:12px; font-size:13px; color:var(--g); line-height:1.6;
+}
+
 .cac-wrap { margin-top:20px; }
 .cac-detail {
   border:1px solid var(--line); border-radius:12px;
@@ -344,23 +368,82 @@ body::after {
   color:var(--w); background:var(--g3); padding:3px 9px; border-radius:4px;
 }
 
-.pfs { display:flex; flex-direction:column; gap:14px; }
-@media(max-width:600px) { .pfs { gap:20px; } }
-.pf {
-  display:flex; align-items:flex-start; gap:0;
-  border:1px solid var(--line); border-radius:10px; overflow:hidden;
-  transition:border-color .2s;
+.pb {
+  margin-top:24px; padding:22px; border:1px solid var(--line);
+  border-radius:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
 }
-.pf:hover { border-color:var(--line-h); }
-.pf-badge {
-  width:60px; min-height:100%; display:flex; align-items:center; justify-content:center;
-  border-right:1px solid var(--line); flex-shrink:0;
-  font-family:var(--mono); font-size:14px; font-weight:700; color:var(--w);
-  background:var(--card);
+.pb-head {
+  display:flex; align-items:flex-start; justify-content:space-between; gap:24px;
+  padding-bottom:18px; margin-bottom:18px; border-bottom:1px solid var(--line);
 }
-.pf-body { padding:18px 22px; flex:1; }
-.pf-body h4 { font-size:15px; font-weight:600; color:var(--w2); margin-bottom:5px; }
-.pf-body p { font-size:14px; color:var(--g); line-height:1.6; }
+.pb-kicker {
+  font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--g2); white-space:nowrap;
+}
+.pb-head p {
+  max-width:580px; font-size:14.5px; color:var(--g); line-height:1.65;
+}
+.pb-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+}
+.pb-card {
+  position:relative; padding:22px; border:1px solid var(--line);
+  border-radius:12px; background:var(--card); overflow:hidden;
+}
+.pb-card::after {
+  content:''; position:absolute; right:-28px; bottom:-38px;
+  width:130px; height:130px;
+  background:radial-gradient(circle, rgba(255,255,255,.06), transparent 68%);
+  opacity:.7; pointer-events:none;
+}
+.pb-card-strong {
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border-color:var(--line-h);
+}
+.pb-card-head {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; margin-bottom:16px;
+}
+.pb-card-head .pf-tag { margin-top:0; }
+.pb-card-no {
+  font-family:var(--mono); font-size:12px; color:var(--g2);
+}
+.pb-card h4 {
+  font-size:20px; font-weight:600; color:var(--w); letter-spacing:-.02em;
+  line-height:1.05; margin-bottom:10px;
+}
+.pb-card p {
+  max-width:32ch; font-size:14.5px; color:var(--g); line-height:1.65;
+}
+.pb-meta {
+  margin-top:20px; padding-top:16px; border-top:1px solid var(--line);
+  display:grid; gap:10px;
+}
+.pb-row {
+  display:flex; align-items:flex-start; justify-content:space-between; gap:16px;
+}
+.pb-row span {
+  font-family:var(--mono); font-size:10px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--g2);
+}
+.pb-row strong {
+  max-width:55%; font-size:13px; font-weight:500; color:var(--w2);
+  text-align:right; line-height:1.45;
+}
+.pb-note {
+  margin-top:12px; font-size:13.5px; color:var(--g); line-height:1.6;
+}
+@media(max-width:720px) {
+  .pb-head { flex-direction:column; }
+  .pb-grid { grid-template-columns:1fr; }
+}
+@media(max-width:540px) {
+  .pb { padding:18px; }
+  .pb-card { padding:20px; }
+  .pb-row { flex-direction:column; gap:5px; }
+  .pb-row strong { max-width:none; text-align:left; }
+}
 .pf-tag {
   display:inline-block; margin-top:10px; font-family:var(--mono); font-size:10px; font-weight:700;
   letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:4px;
@@ -478,23 +561,41 @@ footer .fb { font-weight:600; color:var(--g); }
       </div>
     </div>
 
-    <div class="pfs" style="margin-top:24px">
-      <div class="pf">
-        <div class="pf-badge">INT</div>
-        <div class="pf-body">
+    <div class="pb">
+      <div class="pb-head">
+        <div class="pb-kicker">Playback picks</div>
+        <p>Start with Fusion's internal player. Move to <a href="https://firecore.com/infuse" target="_blank" rel="noreferrer">Infuse</a> only if you want the premium Apple-device playback path.</p>
+      </div>
+
+      <div class="pb-grid">
+        <div class="pb-card">
+          <div class="pb-card-head">
+            <span class="pf-tag compat">Recommended default</span>
+            <span class="pb-card-no">01</span>
+          </div>
           <h4>Internal player</h4>
-          <p>The internal player is good enough for mobile and solid in general, so it is the default recommendation for most people. It does, however, lack some premium codecs.</p>
-          <span class="pf-tag compat">Recommended default</span>
+          <p>Good enough for mobile and most everyday viewing inside Fusion. This is the easiest place for most people to start.</p>
+          <div class="pb-meta">
+            <div class="pb-row"><span>Best for</span><strong>Quick setup with no extra app</strong></div>
+            <div class="pb-row"><span>Tradeoff</span><strong>Misses some premium codecs</strong></div>
+          </div>
         </div>
-      </div>
-      <div class="pf">
-        <div class="pf-badge">INF</div>
-        <div class="pf-body">
+
+        <div class="pb-card pb-card-strong">
+          <div class="pb-card-head">
+            <span class="pf-tag best">Best on Apple devices</span>
+            <span class="pb-card-no">02</span>
+          </div>
           <h4>Infuse</h4>
-          <p><a href="https://firecore.com/infuse" target="_blank" rel="noreferrer">Infuse</a> is still the gold standard on Apple devices for now, especially if you care about Dolby Vision P5 support and broader audio codec support.</p>
-          <span class="pf-tag best">Best on Apple devices</span>
+          <p>The premium route if Dolby Vision P5 support and broader audio codec support matter to you on Apple hardware.</p>
+          <div class="pb-meta">
+            <div class="pb-row"><span>Best for</span><strong>Higher-end playback quality</strong></div>
+            <div class="pb-row"><span>Tradeoff</span><strong>Paid app</strong></div>
+          </div>
         </div>
       </div>
+
+      <p class="pb-note">You do not need Infuse on day one. Start with the internal player and only switch if you run into format limits.</p>
     </div>
   </div>
 </section>
@@ -697,6 +798,16 @@ footer .fb { font-weight:600; color:var(--g); }
         <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">BetterPosters</span></div>
         <div class="ins-path"><span class="ins-path-label">Open</span><span class="crumb">btttr.cc</span></div>
         <p class="ins-why">Use <a href="https://btttr.cc/" target="_blank" rel="noreferrer">BetterPosters</a> for poster overlays and extra visual styling once your rows and collections are already in place.</p>
+
+        <div class="pv" id="posterPreview">
+          <button class="pv-toggle pf-tag best" type="button" onclick="togglePosterPreview(this)">Preview</button>
+          <div class="pv-body">
+            <a class="pv-shot" href="https://media.discordapp.net/attachments/1490137947583021117/1490167764630110299/image.png?ex=69d463e1&is=69d31261&hm=f8b21846d241221cb3aaded42d12c589d69e6467a698ee5feff853c4a5f435ec&=&format=webp&quality=lossless&width=2872&height=1616" target="_blank" rel="noreferrer">
+              <img src="https://media.discordapp.net/attachments/1490137947583021117/1490167764630110299/image.png?ex=69d463e1&is=69d31261&hm=f8b21846d241221cb3aaded42d12c589d69e6467a698ee5feff853c4a5f435ec&=&format=webp&quality=lossless&width=2872&height=1616" alt="Example of BetterPosters poster overlays in Fusion">
+            </a>
+            <p class="pv-cap">Example BetterPosters overlays in Fusion. Click the image to open the full-size version.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -779,6 +890,11 @@ function platformGuide(btn, i) {
   document.querySelectorAll('.gp-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('platformOut').innerHTML = gt[i];
+}
+
+function togglePosterPreview(btn) {
+  const wrap = btn.closest('.pv');
+  wrap.classList.toggle('open');
 }
 </script>
 </body>
