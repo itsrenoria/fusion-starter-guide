@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fusion Starter Guide</title>
+<title>Fusion Setup Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -157,6 +157,35 @@ body::after {
   font-size:16px; color:var(--g); line-height:1.65; max-width:560px;
   margin-bottom:clamp(32px,5vh,56px);
 }
+.start-jump {
+  display:flex; gap:10px; flex-wrap:wrap;
+  margin-top:-10px; margin-bottom:clamp(32px,5vh,56px);
+}
+.start-jump-btn {
+  display:inline-flex; align-items:center; gap:12px;
+  padding:12px 16px; border-radius:8px;
+  border:1px solid var(--line-h); background:rgba(255,255,255,.03);
+  color:var(--w2); text-decoration:none; transition:all .2s;
+}
+.start-jump-btn:hover {
+  border-color:var(--g2); color:var(--w); background:rgba(255,255,255,.05);
+}
+.start-jump-btn.primary {
+  background:var(--w); color:var(--bg); border-color:var(--w);
+}
+.start-jump-btn.primary .start-jump-k,
+.start-jump-btn.primary .start-jump-v { color:inherit; }
+.start-jump-k {
+  font-family:var(--mono); font-size:11px; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--g2);
+}
+.start-jump-v {
+  font-size:14px; font-weight:600; letter-spacing:-.01em; color:var(--w2);
+}
+@media(max-width:600px) {
+  .start-jump { gap:12px; }
+  .start-jump-btn { width:100%; justify-content:space-between; }
+}
 
 .ins {
   display:flex; flex-direction:column; gap:clamp(16px, 3vw, 12px);
@@ -193,6 +222,7 @@ body::after {
   display:flex; align-items:center; gap:6px; flex-wrap:wrap; row-gap:8px;
   margin-bottom:16px;
 }
+.ins-path.copyable { position:relative; }
 .ins-path-label {
   font-family:var(--mono); font-size:11px; font-weight:600;
   letter-spacing:.08em; text-transform:uppercase; color:var(--g2);
@@ -206,22 +236,62 @@ body::after {
 .ins-path .arr {
   font-size:15px; color:var(--g2); margin:0;
 }
+.ins-copy {
+  position:relative; flex:0 0 auto;
+  width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid rgba(255,255,255,.1); border-radius:8px;
+  background:rgba(255,255,255,.03); color:var(--g2);
+  cursor:pointer; transition:border-color .2s, background .2s, color .2s, transform .2s;
+}
+.ins-copy:hover {
+  border-color:var(--line-h); background:rgba(255,255,255,.05); color:var(--w2);
+  transform:translateY(-1px);
+}
+.ins-copy svg {
+  width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7;
+  stroke-linecap:round; stroke-linejoin:round;
+}
+.ins-copy .copy-check { display:none; }
+.ins-copy.copied {
+  border-color:var(--w); background:var(--w); color:var(--bg);
+}
+.ins-copy.copied .copy-dup { display:none; }
+.ins-copy.copied .copy-check { display:block; }
+.ins-copy::after {
+  content:'Copied'; position:absolute; top:-34px; left:50%;
+  font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--bg); background:var(--w);
+  padding:5px 8px; border-radius:6px; opacity:0; translate:-50% 4px;
+  pointer-events:none; transition:opacity .18s, translate .18s;
+}
+.ins-copy.copied::after { opacity:1; translate:-50% 0; }
+@media(max-width:640px) {
+  .ins-copy { width:30px; height:30px; }
+}
 
 .ins-why {
   font-size:14.5px; color:var(--g); line-height:1.7;
 }
 .ins-why b { color:var(--w2); font-weight:600; }
-.ins-why a, .co a, .unsup-note a, td a {
+.ins-why a, .co a, .unsup-note a, td a, .gp-out a {
   color:var(--w2); text-decoration-thickness:1px; text-underline-offset:3px;
 }
 
 .gp { margin-top:40px; }
+.gp.tight { margin-top:16px; }
+.gp + .gp { margin-top:28px; }
+.gp + .ins-why { margin-top:16px; }
+.ins-why + .gp { margin-top:22px; }
 .gp-label { font-family:var(--mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--g2); margin-bottom:12px; }
-.gp-btns { display:flex; gap:8px; margin-bottom:16px; }
+.gp-btns { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
 .gp-btn {
   padding:11px 22px; border:1px solid var(--line-h); border-radius:8px;
   background:transparent; color:var(--g); font-family:var(--sans);
   font-size:14px; font-weight:500; cursor:pointer; transition:all .2s;
+}
+.gp-btn.flag {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 14px; font-size:13px; line-height:1.2;
 }
 .gp-btn:hover { border-color:var(--g2); color:var(--w2); }
 .gp-btn.on { background:var(--w); color:var(--bg); border-color:var(--w); }
@@ -229,6 +299,7 @@ body::after {
   padding:20px 24px; border:1px solid var(--line); border-radius:10px;
   font-size:14.5px; color:var(--g); line-height:1.65; background:var(--card);
 }
+.gp-inline .ins-path { margin-bottom:0; }
 .gp-out b { color:var(--w); font-weight:600; }
 
 .co {
@@ -245,7 +316,7 @@ body::after {
 .co b { color:var(--w2); font-weight:600; }
 .co.accent { }
 
-.pv { margin-top:18px; }
+.pv { margin-top:12px; }
 .pv-toggle {
   margin-top:0; cursor:pointer; border:0;
   transition:transform .2s ease, opacity .2s ease;
@@ -269,84 +340,57 @@ body::after {
   margin-top:12px; font-size:13px; color:var(--g); line-height:1.6;
 }
 
-.cac-wrap { margin-top:20px; }
+.cac-wrap { margin-top:20px; display:flex; flex-direction:column; gap:12px; }
 .cac-detail {
-  border:1px solid var(--line); border-radius:12px;
-  background:var(--card); overflow:hidden;
-  transition:border-color .2s;
+  border:1px solid var(--line); border-radius:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.012));
+  overflow:hidden; transition:border-color .2s, transform .2s, background .2s;
 }
-.cac-detail:hover { border-color:var(--line-h); }
-.cac-detail[open] { border-color:var(--line-h); }
+.cac-detail:hover { border-color:var(--line-h); transform:translateY(-1px); }
+.cac-detail[open] {
+  border-color:var(--line-h);
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.018));
+}
 .cac-summary {
-  display:flex; align-items:center; gap:14px; padding:clamp(18px,3vw,24px);
+  display:flex; align-items:flex-start; gap:14px; padding:clamp(20px,3vw,25px);
   cursor:pointer; list-style:none; user-select:none;
 }
 .cac-summary::-webkit-details-marker { display:none; }
 .cac-summary::before {
-  content:''; width:28px; height:28px; flex-shrink:0;
-  border:1px solid var(--line-h); border-radius:6px;
+  content:''; width:30px; height:30px; flex-shrink:0;
+  border:1px solid var(--line-h); border-radius:8px;
   background:rgba(255,255,255,.04);
   display:flex; align-items:center; justify-content:center;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%23636363' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%236d6d6d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat; background-position:center;
-  transition:transform .25s, border-color .2s;
+  transition:transform .25s, border-color .2s, background .2s;
 }
-.cac-detail[open] .cac-summary::before { transform:rotate(180deg); border-color:var(--g2); }
+.cac-detail[open] .cac-summary::before {
+  transform:rotate(180deg); border-color:var(--g2); background:rgba(255,255,255,.06);
+}
 .cac-summary-text { flex:1; }
 .cac-summary-title {
   font-size:18px; font-weight:600; color:var(--w); letter-spacing:-.01em;
-  display:flex; align-items:center; gap:10px;
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
 }
 .cac-badge {
   font-family:var(--mono); font-size:10px; font-weight:700;
   letter-spacing:.08em; text-transform:uppercase;
-  background:rgba(255,255,255,.08); color:var(--g); padding:3px 8px; border-radius:4px;
-  white-space:nowrap;
+  padding:4px 9px; border-radius:4px; white-space:nowrap;
 }
+.cac-badge.best { background:var(--w); color:var(--bg); }
+.cac-badge.compat { background:var(--g3); color:var(--g); }
+.cac-badge.no { background:transparent; border:1px solid var(--line); color:var(--g2); }
 .cac-summary-sub {
-  font-size:14px; color:var(--g); margin-top:4px; line-height:1.5;
+  max-width:58ch; font-size:14px; color:var(--g); margin-top:5px; line-height:1.55;
 }
 .cac-body {
-  padding:0 clamp(18px,3vw,24px) clamp(18px,3vw,24px);
+  padding:0 clamp(20px,3vw,25px) clamp(20px,3vw,24px);
 }
-.cac-body .ins-path { margin-bottom:16px; margin-top:0; }
+.cac-body .ins-path { margin-bottom:14px; margin-top:0; }
 .cac-intro {
-  font-size:14.5px; color:var(--g); line-height:1.7; margin-bottom:20px;
+  max-width:66ch; font-size:14.5px; color:var(--g); line-height:1.7;
 }
-.cac-cols {
-  display:grid; grid-template-columns:1fr 1fr; gap:16px;
-}
-@media(max-width:680px) { .cac-cols { grid-template-columns:1fr; } }
-.cac-col {
-  border:1px solid var(--line); border-radius:10px;
-  padding:20px; background:rgba(255,255,255,.015);
-}
-.cac-col-h {
-  font-family:var(--mono); font-size:11px; letter-spacing:.1em;
-  text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:8px;
-}
-.cac-col-h .pip {
-  width:6px; height:6px; border-radius:50%; flex-shrink:0;
-}
-.cac-col-h .pip.green { background:#4ade80; box-shadow:0 0 6px rgba(74,222,128,.3); }
-.cac-col-h .pip.amber { background:#fbbf24; box-shadow:0 0 6px rgba(251,191,36,.3); }
-.cac-col-h span:last-child { color:var(--g2); }
-.cac-list { list-style:none; display:flex; flex-direction:column; gap:12px; }
-.cac-list li {
-  font-size:14px; color:var(--g); line-height:1.6;
-  padding-left:16px; position:relative;
-}
-.cac-list li::before {
-  content:''; position:absolute; left:0; top:8px;
-  width:5px; height:5px; border-radius:50%; background:var(--g3);
-}
-.cac-list li b { color:var(--w2); font-weight:600; }
-.cac-verdict {
-  margin-top:20px; padding:18px 22px; border-radius:10px;
-  background:var(--card-h); border:1px solid var(--line-h);
-  font-size:14px; color:var(--g); line-height:1.65;
-}
-.cac-verdict b { color:var(--w2); font-weight:600; }
 
 .steps { display:flex; flex-direction:column; gap:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
 .stp {
@@ -378,12 +422,9 @@ body::after {
   padding-bottom:18px; margin-bottom:18px; border-bottom:1px solid var(--line);
 }
 .pb-kicker {
-  font-family:var(--mono); font-size:11px; letter-spacing:.12em;
-  text-transform:uppercase; color:var(--g2); white-space:nowrap;
+  margin-bottom:0; white-space:nowrap;
 }
-.pb-head p {
-  max-width:580px; font-size:14.5px; color:var(--g); line-height:1.65;
-}
+.pb-head .ins-why { max-width:580px; }
 .pb-grid {
   display:grid; grid-template-columns:1fr 1fr; gap:14px;
 }
@@ -451,7 +492,6 @@ body::after {
 .pf-tag.best { background:var(--w); color:var(--bg); }
 .pf-tag.compat { background:var(--g3); color:var(--g); }
 .pf-tag.no { background:transparent; border:1px solid var(--line); color:var(--g2); }
-
 .unsup { margin-top:32px; }
 .unsup-label {
   font-family:var(--mono); font-size:11px; letter-spacing:.15em;
@@ -507,6 +547,7 @@ footer .fb { font-weight:600; color:var(--g); }
   <div class="fnav-links">
     <a href="#start">Start Here</a>
     <a href="#streams">AIOStreams</a>
+    <a href="#player">Player</a>
     <a href="#kit">Starter Kit</a>
     <a href="#ratings">Ratings</a>
     <a href="#extras">Extras</a>
@@ -521,56 +562,92 @@ footer .fb { font-weight:600; color:var(--g); }
 <div class="mob-menu" id="mobMenu">
   <a href="#start" onclick="closeMenu()"><span class="mob-num">01</span> Start Here</a>
   <a href="#streams" onclick="closeMenu()"><span class="mob-num">02</span> AIOStreams</a>
-  <a href="#kit" onclick="closeMenu()"><span class="mob-num">03</span> Starter Kit</a>
-  <a href="#ratings" onclick="closeMenu()"><span class="mob-num">04</span> Ratings</a>
-  <a href="#extras" onclick="closeMenu()"><span class="mob-num">05</span> Extras</a>
-  <a href="#ref" onclick="closeMenu()"><span class="mob-num">06</span> Quick Links</a>
+  <a href="#player" onclick="closeMenu()"><span class="mob-num">03</span> Player</a>
+  <a href="#kit" onclick="closeMenu()"><span class="mob-num">04</span> Starter Kit</a>
+  <a href="#ratings" onclick="closeMenu()"><span class="mob-num">05</span> Ratings</a>
+  <a href="#extras" onclick="closeMenu()"><span class="mob-num">06</span> Extras</a>
+  <a href="#ref" onclick="closeMenu()"><span class="mob-num">07</span> Quick Links</a>
 </div>
 
 <header class="header">
   <p class="header-brand">itsrenoria</p>
-  <h1>Fusion Starter<br>Setup Guide</h1>
-  <p class="header-sub">The quickest clean setup for Fusion. Start with AIOStreams, add Torbox if you use debrid, then use the Starter Kit to make the homescreen, ratings, overlays, and trailer previews feel complete.</p>
+  <h1>Fusion<br>Setup Guide</h1>
+  <p class="header-sub">The quickest clean setup for Fusion. Start with AIOStreams, then use the Starter Kit to make the homescreen, widgets and ratings pop. Once you're comfortable, head-over to Extras for some upgrades.</p>
   <div class="header-line"></div>
 </header>
 
 <section class="s" id="start">
   <div class="s-inner rv">
     <div class="sh"><span class="sh-num">01</span><h2 class="sh-title">Start Here</h2></div>
-    <p class="sh-desc">This guide keeps the first setup intentionally simple. Fusion plus AIOStreams is enough for a strong basic build. If you already have a sources addon or AIOStreams configured, you can skip that part and use your existing setup instead.</p>
+    <p class="sh-desc">This guide keeps the first setup intentionally simple. Fusion with AIOStreams is enough for a strong initial build. If you already have sources addons or AIOStreams configured, you can skip directly to the Player, Starter Kit, Ratings and Extras sections.</p>
+    <div class="start-jump">
+      <a class="start-jump-btn primary" href="#streams"><span class="start-jump-k">First time</span><span class="start-jump-v">Start with AIOStreams</span></a>
+      <a class="start-jump-btn" href="#player"><span class="start-jump-k">Already set up</span><span class="start-jump-v">Skip to Player</span></a>
+    </div>
   </div>
 
   <div class="s-wide rv">
     <div class="ins">
       <div class="ins-card">
-        <div class="ins-name">Already have sources set up?</div>
-        <div class="ins-action"><span class="ins-action-label">If yes</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Skip the addon setup part</span></div>
-        <p class="ins-why">If you already have a working sources addon or AIOStreams configuration, use that directly and skip ahead to the Starter Kit, ratings icons, poster overlays, or trailer previews.</p>
-      </div>
-
-      <div class="ins-card">
         <div class="ins-name">Keep the stack minimal</div>
-        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Fusion + AIOStreams + Torbox</span></div>
-        <p class="ins-why"><b>AIOStreams is the recommended addon.</b> If you use debrid, pair it with <a href="https://torbox.app" target="_blank" rel="noreferrer">Torbox</a>. This guide does not include AIOMetadata as part of the default setup.</p>
-      </div>
-
-      <div class="ins-card">
-        <div class="ins-name">Use the community resources</div>
-        <div class="ins-action"><span class="ins-action-label">Add later</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Starter Kit, BetterPosters, Trailerio</span></div>
-        <p class="ins-why">Most of the best Fusion polish already exists. Use the <a href="https://itsrenoria.github.io/fusion-starter-kit/" target="_blank" rel="noreferrer">Fusion Starter Kit</a> for homescreen setups, widgets, collections, and icon packs. Then use <a href="https://btttr.cc/" target="_blank" rel="noreferrer">BetterPosters</a> and <a href="https://trailerio.cc/manifest.json" target="_blank" rel="noreferrer">Trailerio</a> when you want the interface to feel finished.</p>
+        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Fusion + AIOStreams with TorBox</span></div>
+        <p class="ins-why"><b>This guide does not include AIOMetadata as part of the default setup.</b> It is fully supported, but Fusion already covers a lot of the same ground with its built-in features and tends to feel faster and lighter across catalogues, metadata and search. If you self-host AIOMetadata, that gap gets smaller.</p>
       </div>
     </div>
 
-    <div class="pb">
-      <div class="pb-head">
-        <div class="pb-kicker">Playback picks</div>
-        <p>Start with Fusion's internal player. Move to <a href="https://firecore.com/infuse" target="_blank" rel="noreferrer">Infuse</a> only if you want the premium Apple-device playback path.</p>
+    <div class="co">
+      <div class="co-h">Debrid support</div>
+      TorBox is the recommended debrid provider for this guide, but it is not the only option. Other debrid services supported by AIOStreams, along with other debrid-focused sources addons, are fully supported in Fusion too.
+    </div>
+  </div>
+</section>
+
+<section class="s" id="streams">
+  <div class="s-inner rv">
+    <div class="sh"><span class="sh-num">02</span><h2 class="sh-title">AIOStreams</h2></div>
+    <p class="sh-desc">For an awesome Fusion setup, this is the addon to start with. Use the official AIOStreams guide to get it set up cleanly.</p>
+  </div>
+
+  <div class="s-wide rv">
+    <div class="ins">
+      <div class="ins-card">
+        <div class="ins-name">First things first</div>
+        <div class="ins-path" data-copy="https://torbox.app/subscription?referral=eec0b6a7-60fb-4a99-8eed-771376f89995"><span class="ins-path-label">Sign up</span><span class="crumb">TorBox.app</span></div>
+        <p class="ins-why"><b>TorBox is the recommended debrid provider.</b> Go to <a href="https://torbox.app/subscription?referral=eec0b6a7-60fb-4a99-8eed-771376f89995" target="_blank" rel="noreferrer">TorBox.app</a> and sign up for the Essential plan ($33/year).</p>
       </div>
 
+      <div class="ins-card">
+        <div class="ins-name">Open the official docs</div>
+        <div class="ins-path" data-copy="https://docs.aiostreams.viren070.me"><span class="ins-path-label">Open</span><span class="crumb">docs.aiostreams.viren070.me</span></div>
+        <p class="ins-why"><b>AIOStreams is the recommended sources addon.</b> Use the official AIOStreams documentation to configure the addon and generate the install URL you want to use in Fusion.</p>
+        <div class="co">
+          <div class="co-h">Recommended instance</div>
+          I also recommend <a href="https://fortheweak.cloud" target="_blank" rel="noreferrer">nhyyeb's</a> nightly instance at <a href="https://aiostreams-nightly.fortheweak.cloud/stremio/configure" target="_blank" rel="noreferrer">aiostreams-nightly.fortheweak.cloud</a>. He's both an admin in AIOStreams and a Founding Contributor of Fusion.
+        </div>
+      </div>
+
+      <div class="ins-card">
+        <div class="ins-name">Install AIOStreams</div>
+        <div class="ins-path"><span class="ins-path-label">Install</span><span class="crumb">Settings</span><span class="arr">&rsaquo;</span><span class="crumb">Addons</span></div>
+        <p class="ins-why">Once the docs give you the final AIOStreams URL, paste it into Fusion and you're off.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="s" id="player">
+  <div class="s-inner rv">
+    <div class="sh"><span class="sh-num">03</span><h2 class="sh-title">Player</h2></div>
+    <p class="sh-desc">Fusion gives you two playback options worth your time here: the built-in player for the native experience, and <a href="https://firecore.com/infuse" target="_blank" rel="noreferrer">Infuse</a> if you want the more premium Apple-device route.</p>
+  </div>
+
+  <div class="s-wide rv">
+    <div class="pb">
       <div class="pb-grid">
         <div class="pb-card">
           <div class="pb-card-head">
-            <span class="pf-tag compat">Recommended default</span>
+            <span class="pf-tag compat">Default</span>
             <span class="pb-card-no">01</span>
           </div>
           <h4>Internal player</h4>
@@ -597,70 +674,40 @@ footer .fb { font-weight:600; color:var(--g); }
 
       <p class="pb-note">You do not need Infuse on day one. Start with the internal player and only switch if you run into format limits.</p>
     </div>
-  </div>
-</section>
 
-<section class="s" id="streams">
-  <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">02</span><h2 class="sh-title">AIOStreams</h2></div>
-    <p class="sh-desc">For a basic Fusion setup, this is the addon to start with. Use the official AIOStreams docs for the current flow. If you already have AIOStreams or another sources addon configured, you can skip this section and use that instead.</p>
-  </div>
-
-  <div class="s-wide rv">
-    <div class="ins">
-      <div class="ins-card">
-        <div class="ins-name">Open the official docs</div>
-        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">docs.aiostreams.viren070.me</span></div>
-        <div class="ins-path"><span class="ins-path-label">Open</span><span class="crumb">AIOStreams docs</span></div>
-        <p class="ins-why">Use the official <a href="https://docs.aiostreams.viren070.me" target="_blank" rel="noreferrer">AIOStreams documentation</a> to configure the addon and generate the install URL you want to use in Fusion. If you use debrid, <a href="https://torbox.app" target="_blank" rel="noreferrer">Torbox</a> is the recommended provider alongside AIOStreams.</p>
-      </div>
-
-      <div class="ins-card">
-        <div class="ins-name">Install the generated addon URL</div>
-        <div class="ins-action"><span class="ins-action-label">Paste into</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Fusion Addons</span></div>
-        <div class="ins-path"><span class="ins-path-label">Find it</span><span class="crumb">Settings</span><span class="arr">&rsaquo;</span><span class="crumb">Addons</span></div>
-        <p class="ins-why">Once the docs give you the final AIOStreams URL, paste it into Fusion and let the app load the addon manifest.</p>
-      </div>
+    <div class="co">
+      <div class="co-h">Difusion</div>
+      Fusion's internal player is built from the ground up by the Fusion developer with the goal of getting as close to Infuse as possible. It is built on FFmpeg and AVFoundation, is being worked on actively, and the latest TestFlight builds have already fixed most of the issues people still bring up. It is a genuinely solid choice.
     </div>
-
   </div>
 </section>
 
 <section class="s" id="kit">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">03</span><h2 class="sh-title">Starter Kit</h2></div>
+    <div class="sh"><span class="sh-num">04</span><h2 class="sh-title">Starter Kit</h2></div>
     <p class="sh-desc">The Fusion Starter Kit is the easiest way to import homescreen layouts, widgets, collections, icon packs, and other resources.</p>
   </div>
 
   <div class="s-wide rv">
     <div class="ins">
       <div class="ins-card">
-        <div class="ins-name">Open the Starter Kit</div>
-        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Fusion community project</span></div>
-        <div class="ins-path"><span class="ins-path-label">Open</span><span class="crumb">itsrenoria.github.io</span><span class="arr">&rsaquo;</span><span class="crumb">fusion-starter-kit</span></div>
-        <p class="ins-why">Browse <a href="https://itsrenoria.github.io/fusion-starter-kit/" target="_blank" rel="noreferrer">the Starter Kit</a> for homescreen setups, widgets, collections, icon packs, and other community-built Fusion resources.</p>
-      </div>
-
-      <div class="ins-card">
-        <div class="ins-name">Choose sourced or self-assigned imports</div>
-        <div class="ins-action"><span class="ins-action-label">When asked</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Pick your source behavior</span></div>
-        <p class="ins-why">Many Starter Kit imports ask whether you want sources included or want to assign them yourself in Fusion. Choose sourced for a ready-made setup, or raw if you want to wire rows manually.</p>
+        <div class="ins-name">Fusion Starter Kit</div>
+        <div class="ins-path" data-copy="https://itsrenoria.github.io/fusion-starter-kit/"><span class="ins-path-label">Open</span><span class="crumb">itsrenoria.github.io/fusion-starter-kit</span></div>
+        <p class="ins-why">Browse for homescreen setups, widgets, collections, icon packs, and other community-built Fusion resources.</p>
       </div>
     </div>
-
-    <p class="unsup-note">The goal is to get Fusion working cleanly with the fewest moving parts first. Add complexity only after the basics feel stable. In practice, widgets and collections are almost the same import flow.</p>
 
     <div class="cac-wrap">
       <details class="cac-detail" open>
         <summary class="cac-summary">
           <div class="cac-summary-text">
-            <div class="cac-summary-title">Import widgets <span class="cac-badge">Most common</span></div>
+            <div class="cac-summary-title">Import widgets <span class="cac-badge compat">Most common</span></div>
             <div class="cac-summary-sub">The fastest way to add rows to the home screen.</div>
           </div>
         </summary>
         <div class="cac-body">
           <div class="ins-path">
-            <span class="ins-path-label">Find it</span>
+            <span class="ins-path-label">Import it</span>
             <span class="crumb">Settings</span><span class="arr">&rsaquo;</span>
             <span class="crumb">Widgets</span><span class="arr">&rsaquo;</span>
             <span class="crumb">Scroll to bottom</span><span class="arr">&rsaquo;</span>
@@ -668,20 +715,20 @@ footer .fb { font-weight:600; color:var(--g); }
             <span class="crumb">URL</span>
           </div>
 
-          <p class="cac-intro">Pick a widget from the Starter Kit, click <b>Copy JSON URL</b>, choose <b>Widget</b> in Fusion, then decide whether you want sources included or want to assign them yourself later.</p>
+          <p class="cac-intro">Pick a widget from the Starter Kit, click <b>Copy JSON URL</b>, choose <b>Widget</b>, decide whether you want sources included or want to assign them yourself later, then paste it into Fusion.</p>
         </div>
       </details>
 
       <details class="cac-detail">
         <summary class="cac-summary">
           <div class="cac-summary-text">
-            <div class="cac-summary-title">Import collections <span class="cac-badge">Almost identical</span></div>
+            <div class="cac-summary-title">Import collections <span class="cac-badge no">Almost identical</span></div>
             <div class="cac-summary-sub">Collections follow nearly the same idea as widgets.</div>
           </div>
         </summary>
         <div class="cac-body">
           <div class="ins-path">
-            <span class="ins-path-label">Find it</span>
+            <span class="ins-path-label">Import it</span>
             <span class="crumb">Settings</span><span class="arr">&rsaquo;</span>
             <span class="crumb">Widgets</span><span class="arr">&rsaquo;</span>
             <span class="crumb">Add New</span><span class="arr">&rsaquo;</span>
@@ -690,20 +737,20 @@ footer .fb { font-weight:600; color:var(--g); }
             <span class="crumb">Import Collections</span>
           </div>
 
-          <p class="cac-intro">Pick a widget from the Starter Kit, click <b>Copy JSON URL</b>, choose <b>Collection</b>, then choose whether you want the sources bundled in or want to attach them yourself in Fusion.</p>
+          <p class="cac-intro">Pick a widget from the Starter Kit, click <b>Copy JSON URL</b>, choose <b>Collection</b>, decide whether you want sources included or want to assign them yourself later, then paste it into Fusion.</p>
         </div>
       </details>
 
       <details class="cac-detail">
         <summary class="cac-summary">
           <div class="cac-summary-text">
-            <div class="cac-summary-title">Import full setups <span class="cac-badge">Fastest reset</span></div>
+            <div class="cac-summary-title">Import full setups <span class="cac-badge best">Fastest reset</span></div>
             <div class="cac-summary-sub">Best when you want Fusion to feel complete in one move.</div>
           </div>
         </summary>
         <div class="cac-body">
           <div class="ins-path">
-            <span class="ins-path-label">Find it</span>
+            <span class="ins-path-label">Import it</span>
             <span class="crumb">Settings</span><span class="arr">&rsaquo;</span>
             <span class="crumb">Widgets</span><span class="arr">&rsaquo;</span>
             <span class="crumb">Scroll to bottom</span><span class="arr">&rsaquo;</span>
@@ -718,13 +765,13 @@ footer .fb { font-weight:600; color:var(--g); }
       <details class="cac-detail">
         <summary class="cac-summary">
           <div class="cac-summary-text">
-            <div class="cac-summary-title">Import BYO setups <span class="cac-badge">Build your own</span></div>
+            <div class="cac-summary-title">Import BYO setups <span class="cac-badge compat">Build your own</span></div>
             <div class="cac-summary-sub">Use JSON paste when you want a custom widget bundle.</div>
           </div>
         </summary>
         <div class="cac-body">
           <div class="ins-path">
-            <span class="ins-path-label">Find it</span>
+            <span class="ins-path-label">Import it</span>
             <span class="crumb">Settings</span><span class="arr">&rsaquo;</span>
             <span class="crumb">Widgets</span><span class="arr">&rsaquo;</span>
             <span class="crumb">Scroll to bottom</span><span class="arr">&rsaquo;</span>
@@ -732,56 +779,86 @@ footer .fb { font-weight:600; color:var(--g); }
             <span class="crumb">Paste JSON</span>
           </div>
 
-          <p class="cac-intro">Choose <b>BYO</b> in the Starter Kit, click <b>Build JSON</b>, select the widgets you want, click <b>Copy JSON</b>, choose whether you want sources included, and paste the JSON string into Fusion.</p>
+          <p class="cac-intro">Choose <b>BYO</b> in the Starter Kit, click <b>Build JSON</b>, select the widgets you want, click <b>Copy JSON</b>, choose whether you want sources included, copy and paste the JSON string into Fusion.</p>
         </div>
       </details>
+    </div>
+
+    <div class="co">
+      <div class="co-h">Widgets and collections</div>
+      In practice, widgets and collections are essentially the same besides the import flow.
     </div>
   </div>
 </section>
 
 <section class="s" id="ratings">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">04</span><h2 class="sh-title">Ratings Icons</h2></div>
-    <p class="sh-desc">Fusion can show community rating labels on posters. To make that work cleanly, connect PMDB first, then import an icon pack and map it to your labels.</p>
+    <div class="sh"><span class="sh-num">05</span><h2 class="sh-title">Ratings Icons</h2></div>
+    <p class="sh-desc">Fusion can show community rating labels on the hero, media details and on posters. To make that work cleanly, connect PMDB first, then import an icon pack and map it to your labels.</p>
   </div>
 
   <div class="s-wide rv">
     <div class="steps">
-      <div class="stp"><div class="stp-n">1</div><div class="stp-body"><h4>Connect PMDB</h4><p>Go to <b>Settings &rsaquo; Accounts &rsaquo; PublicMetaDB</b> and connect your account.</p></div></div>
+      <div class="stp"><div class="stp-n">0</div><div class="stp-body"><h4>Create your PMDB setup</h4><p>Sign up for <a href="https://publicmetadb.com" target="_blank" rel="noreferrer">PMDB</a> and create an API key under <b>Settings &rsaquo; API</b>.</p></div></div>
+      <div class="stp"><div class="stp-n">1</div><div class="stp-body"><h4>Connect PMDB</h4><p>Go to <b>Settings &rsaquo; Accounts &rsaquo; PublicMetaDB</b> and paste your API key.</p></div></div>
       <div class="stp"><div class="stp-n">2</div><div class="stp-body"><h4>Enable community ratings</h4><p>Open <b>Settings &rsaquo; Metadata &rsaquo; Community Ratings</b> and toggle it on.</p></div></div>
-      <div class="stp"><div class="stp-n">3</div><div class="stp-body"><h4>Create the labels</h4><p>Make labels like <span class="pill">masterpiece</span>, <span class="pill">great</span>, <span class="pill">good</span>, <span class="pill">okay</span>, and <span class="pill">skip</span>. Reorder them if you want.</p></div></div>
-      <div class="stp"><div class="stp-n">4</div><div class="stp-body"><h4>Import an icon pack</h4><p>Go to <b>Settings &rsaquo; Icon Packs</b> and import from URL or paste JSON. The Starter Kit includes icon pack links for this.</p></div></div>
+      <div class="stp"><div class="stp-n">3</div><div class="stp-body"><h4>Enable and sort ratings</h4><p>Enable the ratings you want shown and sort them as per your preference.</p></div></div>
+      <div class="stp"><div class="stp-n">4</div><div class="stp-body"><h4>Import an icon pack</h4><p>Go to <b>Settings &rsaquo; Icon Packs</b> and add <b>Icon Pack from URL</b>. The <a href="https://itsrenoria.github.io/fusion-starter-kit/?type=icon-packs" target="_blank" rel="noreferrer">Starter Kit</a> includes icon pack links for this.</p></div></div>
       <div class="stp"><div class="stp-n">5</div><div class="stp-body"><h4>Assign icons to labels</h4><p>Tap each rating label and choose the icon you want attached to it.</p></div></div>
-      <div class="stp"><div class="stp-n">6</div><div class="stp-body"><h4>Show them on posters</h4><p>Back in community ratings, make sure <b>Show on Posters</b> is enabled.</p></div></div>
+      <div class="stp"><div class="stp-n">*</div><div class="stp-body"><h4>Optional: show them on posters</h4><p>Back in <b>Settings &rsaquo; Metadata &rsaquo; Community Ratings</b>, make sure <b>Show on Posters</b> is enabled if you want it.</p></div></div>
     </div>
 
     <div class="co">
-      <div class="co-h">PMDB and icon packs</div>
-      <a href="https://itsrenoria.github.io/fusion-starter-kit/" target="_blank" rel="noreferrer">The Fusion Starter Kit</a> is the easiest place to find icon packs. PMDB itself is also worth knowing about beyond ratings: it is an alternative to Trakt, built by the Fusion developer. Official site: <a href="https://publicmetadb.com" target="_blank" rel="noreferrer">publicmetadb.com</a>.
+      <div class="co-h">PMDB</div>
+      PMDB is also worth knowing about beyond ratings: it is an actively updated alternative to Trakt, built by the Fusion developer, and fully integrated into Fusion and the internal player. It recently got scrobbling, and already includes lists, continue watching, up next, history, skips, highlights, calendar, favorites, discover stats, and more still to come. Head over to Extras for a nice surprise if you're considering switching to it.
     </div>
   </div>
 </section>
 
 <section class="s" id="extras">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">05</span><h2 class="sh-title">Extras</h2></div>
-    <p class="sh-desc">Once the main setup works, these are the two easiest upgrades that make Fusion feel more polished: poster overlays and trailer previews.</p>
+    <div class="sh"><span class="sh-num">06</span><h2 class="sh-title">Extras</h2></div>
+    <p class="sh-desc">Once the main setup works, these are some upgrades that will make Fusion feel even more polished.</p>
   </div>
 
   <div class="s-wide rv">
     <div class="ins">
       <div class="ins-card">
         <div class="ins-name">Apple TV settings</div>
-        <div class="ins-action"><span class="ins-action-label">If you own one</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Use the Yuhasebe Guide</span></div>
-        <div class="ins-path"><span class="ins-path-label">Open</span><span class="crumb">qooode.github.io</span><span class="arr">&rsaquo;</span><span class="crumb">yuh-guide</span></div>
-        <p class="ins-why">If you use an Apple TV, the <a href="https://qooode.github.io/yuh-guide/" target="_blank" rel="noreferrer">Yuhasebe Guide</a> is a great bonus reference for device-level Apple TV settings.</p>
+        <div class="ins-action"><span class="ins-action-label">If you own one</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Yuhasebe Guide</span></div>
+        <div class="ins-path" data-copy="https://qooode.github.io/yuh-guide/"><span class="ins-path-label">Open</span><span class="crumb">qooode.github.io/yuh-guide</span></div>
+        <p class="ins-why">This guide is a must-have for device-level Apple TV settings, made by none other than <span class="pill">yuhasebe</span>.</p>
       </div>
 
       <div class="ins-card">
         <div class="ins-name">Trailer previews</div>
-        <div class="ins-action"><span class="ins-action-label">Install</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Trailerio manifest</span></div>
-        <div class="ins-path"><span class="ins-path-label">Use URL</span><span class="crumb">trailerio.cc/manifest.json</span></div>
-        <p class="ins-why">Add <a href="https://trailerio.cc/manifest.json" target="_blank" rel="noreferrer">Trailerio</a> in Fusion so the app can surface trailer previews in the hero area.</p>
+        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Trailerio</span></div>
+        <p class="ins-why">Install Trailerio in Fusion as an addon so the app can show trailer previews.</p>
+
+        <div class="gp tight">
+          <div class="gp-label">Choose trailer language</div>
+          <div class="gp-btns">
+            <button class="gp-btn flag on" onclick="trailerManifest(this,0)">🇬🇧 English</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,1)">🇫🇷 French</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,2)">🇩🇪 German</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,3)">🇮🇹 Italian</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,4)">🇪🇸 Spanish</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,5)">🇵🇹 Portuguese</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,6)">🇷🇺 Russian</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,7)">🇯🇵 Japanese</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,8)">🇰🇷 Korean</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,9)">🇨🇿 Czech</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,10)">🇮🇳 Hindi</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,11)">🇹🇷 Turkish</button>
+            <button class="gp-btn flag" onclick="trailerManifest(this,12)">🇸🇦 Arabic</button>
+          </div>
+          <div class="gp-inline" id="trailerManifestOut">
+            <div class="ins-path" data-copy="https://trailerio.cc/manifest.json">
+              <span class="ins-path-label">Use URL</span>
+              <span class="crumb">trailerio.cc/manifest.json</span>
+            </div>
+          </div>
+        </div>
 
         <div class="gp">
           <div class="gp-label">Enable trailer previews</div>
@@ -789,15 +866,15 @@ footer .fb { font-weight:600; color:var(--g); }
             <button class="gp-btn on" onclick="platformGuide(this,0)">tvOS</button>
             <button class="gp-btn" onclick="platformGuide(this,1)">iOS</button>
           </div>
-          <div class="gp-out" id="platformOut"><b>tvOS:</b> Open <b>Settings &rsaquo; Video Player</b> and turn <b>Autoplay Previews</b> on. The exact wording can vary slightly by version, but it stays in the video player settings.</div>
+          <div class="gp-out" id="platformOut">Open <b>Settings &rsaquo; Video Player</b> and turn <b>Autoplay Previews</b> on. The exact wording can vary slightly by version, but it stays in the video player settings.</div>
         </div>
       </div>
 
       <div class="ins-card">
         <div class="ins-name">Poster overlays</div>
         <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">BetterPosters</span></div>
-        <div class="ins-path"><span class="ins-path-label">Open</span><span class="crumb">btttr.cc</span></div>
-        <p class="ins-why">Use <a href="https://btttr.cc/" target="_blank" rel="noreferrer">BetterPosters</a> for poster overlays and extra visual styling once your rows and collections are already in place.</p>
+        <div class="ins-path" data-copy="https://btttr.cc/"><span class="ins-path-label">Open</span><span class="crumb">btttr.cc</span></div>
+        <p class="ins-why">Use BetterPosters for clean overlays and extra visual styling in your posters, if you like the preview.</p>
 
         <div class="pv" id="posterPreview">
           <button class="pv-toggle pf-tag best" type="button" onclick="togglePosterPreview(this)">Preview</button>
@@ -809,13 +886,45 @@ footer .fb { font-weight:600; color:var(--g); }
           </div>
         </div>
       </div>
+
+      <div class="ins-card">
+        <div class="ins-name">Trakt to PMDB migration</div>
+        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Migration Utility</span></div>
+        <div class="gp tight">
+          <div class="gp-btns">
+            <button class="gp-btn flag on" onclick="migrationMode(this,0)">Self-host</button>
+            <button class="gp-btn flag" onclick="migrationMode(this,1)">Website</button>
+          </div>
+          <div class="gp-inline" id="migrationOut">
+            <div class="ins-path" data-copy="https://github.com/yodaluca23/Trakt-To-PMDB-Migration">
+              <span class="ins-path-label">Open</span>
+              <span class="crumb">github.com/yodaluca23/Trakt-To-PMDB-Migration</span>
+            </div>
+          </div>
+        </div>
+        <p class="ins-why">If you want to move from Trakt to PMDB, this utility migrates your watchlist, custom lists, watch history, and resume points.</p>
+      </div>
+
+      <div class="ins-card">
+        <div class="ins-name">SyncMeta</div>
+        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">PMDB Sync Tool</span></div>
+        <div class="ins-path" data-copy="https://syncmeta.febsho.me"><span class="ins-path-label">Open</span><span class="crumb">syncmeta.febsho.me</span></div>
+        <p class="ins-why">SyncMeta automatically syncs your watchlists and lists from SIMKL, Trakt, AniList, and MDBList into PublicMetaDB. It also supports history import for Trakt and SIMKL, plus resume progress for Trakt.</p>
+      </div>
+
+      <div class="ins-card">
+        <div class="ins-name">Migrating from Omni</div>
+        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Fusion Widget Manager</span></div>
+        <div class="ins-path" data-copy="https://nobnobz.github.io/fusion-widget-manager/"><span class="ins-path-label">Open</span><span class="crumb">nobnobz.github.io/fusion-widget-manager</span></div>
+        <p class="ins-why">If you are coming from Omni, this is the cleanest way to move over. Fusion Widget Manager can convert Omni snapshots into Fusion widgets, merge them into existing setups, and export them back into Fusion without manually wrestling with JSON. Even outside Omni migration, it is a genuinely useful browser-based editor for building, merging, and maintaining larger widget setups.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="s" id="ref">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">06</span><h2 class="sh-title">Quick Links</h2></div>
+    <div class="sh"><span class="sh-num">07</span><h2 class="sh-title">Quick Links</h2></div>
     <p class="sh-desc">Everything important in one table. Install the basics first, then layer on the community resources.</p>
   </div>
 
@@ -825,7 +934,7 @@ footer .fb { font-weight:600; color:var(--g); }
         <thead><tr><th>Resource</th><th>Use it for</th><th>Where to find it</th></tr></thead>
         <tbody>
           <tr><td>AIOStreams</td><td>Recommended addon for a basic Fusion setup.</td><td><a href="https://docs.aiostreams.viren070.me" target="_blank" rel="noreferrer">docs.aiostreams.viren070.me</a></td></tr>
-          <tr><td>Torbox</td><td>Recommended debrid companion for AIOStreams.</td><td><a href="https://torbox.app" target="_blank" rel="noreferrer">torbox.app</a></td></tr>
+          <tr><td>TorBox</td><td>Recommended debrid companion for AIOStreams.</td><td><a href="https://torbox.app/subscription?referral=eec0b6a7-60fb-4a99-8eed-771376f89995" target="_blank" rel="noreferrer">TorBox.app</a></td></tr>
           <tr><td>Starter Kit</td><td>Homescreen setups, widgets, collections, icon packs, and more.</td><td><a href="https://itsrenoria.github.io/fusion-starter-kit/" target="_blank" rel="noreferrer">itsrenoria.github.io</a></td></tr>
           <tr><td>BetterPosters</td><td>Poster overlays and visual polish.</td><td><a href="https://btttr.cc/" target="_blank" rel="noreferrer">btttr.cc</a></td></tr>
           <tr><td>Trailerio</td><td>Trailer previews in the home hero section.</td><td><a href="https://trailerio.cc/manifest.json" target="_blank" rel="noreferrer">manifest.json</a></td></tr>
@@ -882,14 +991,118 @@ addEventListener('scroll', () => {
   mobLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
 });
 
+function copyIconMarkup() {
+  return '<svg class="copy-dup" viewBox="0 0 16 16" aria-hidden="true"><rect x="6" y="2.5" width="7.5" height="9.5" rx="1.8"></rect><rect x="2.5" y="6" width="7.5" height="7.5" rx="1.8"></rect></svg><svg class="copy-check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l2.6 2.6 6-6"></path></svg>';
+}
+
+function copyTextValue(value) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(value);
+  }
+  return new Promise((resolve, reject) => {
+    try {
+      const input = document.createElement('textarea');
+      input.value = value;
+      input.setAttribute('readonly', '');
+      input.style.position = 'absolute';
+      input.style.left = '-9999px';
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      input.remove();
+      resolve();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+async function copyCardLink(btn, value) {
+  try {
+    await copyTextValue(value);
+    btn.classList.add('copied');
+    clearTimeout(btn._copyTimer);
+    btn._copyTimer = setTimeout(() => btn.classList.remove('copied'), 1400);
+  } catch (err) {
+    console.error('Copy failed', err);
+  }
+}
+
+function enhanceCopyPaths(root = document) {
+  root.querySelectorAll('.ins-path[data-copy]').forEach(path => {
+    path.classList.add('copyable');
+    if (path.querySelector('.ins-copy')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ins-copy';
+    btn.setAttribute('aria-label', 'Copy link');
+    btn.setAttribute('title', 'Copy link');
+    btn.innerHTML = copyIconMarkup();
+    btn.addEventListener('click', () => copyCardLink(btn, path.dataset.copy));
+    path.appendChild(btn);
+  });
+}
+
+function copyPathMarkup(label, url) {
+  const display = url.replace('https://', '');
+  return '<div class="ins-path" data-copy="' + url + '"><span class="ins-path-label">' + label + '</span><span class="crumb">' + display + '</span></div>';
+}
+
+function trailerManifestMarkup(item) {
+  return copyPathMarkup('Use URL', item.url);
+}
+
+function migrationMarkup(item) {
+  if (item.url) return copyPathMarkup('Open', item.url);
+  return '<div class="ins-path"><span class="ins-path-label">Website</span><span class="crumb">Coming soon</span></div>';
+}
+
+enhanceCopyPaths();
+
 const gt = [
-  '<b>tvOS:</b> Open <b>Settings &rsaquo; Video Player</b> and turn <b>Autoplay Previews</b> on. The exact wording can vary slightly by version, but it stays in the video player settings.',
-  '<b>iOS:</b> Open <b>Settings &rsaquo; Video Player</b> and enable <b>Autoplay Previews</b> or <b>Hero Trailers</b>. The wording may change slightly between builds, but it is still the same toggle area.'
+  'Open <b>Settings &rsaquo; Video Player</b> and turn <b>Autoplay Previews</b> on. The exact wording can vary slightly by version, but it stays in the video player settings.',
+  'Open <b>Settings &rsaquo; Video Player</b> and enable <b>Autoplay Previews</b> or <b>Hero Trailers</b>. The wording may change slightly between builds, but it is still the same toggle area.'
+];
+const trailerLinks = [
+  { name: 'English', url: 'https://trailerio.cc/manifest.json', note: 'Use the default Trailerio manifest.' },
+  { name: 'French', url: 'https://trailerio.cc/fr/manifest.json', note: 'Use this if you want French trailer text.' },
+  { name: 'German', url: 'https://trailerio.cc/de/manifest.json', note: 'Use this if you want German trailer text.' },
+  { name: 'Italian', url: 'https://trailerio.cc/it/manifest.json', note: 'Use this if you want Italian trailer text.' },
+  { name: 'Spanish', url: 'https://trailerio.cc/es/manifest.json', note: 'Use this if you want Spanish trailer text.' },
+  { name: 'Portuguese', url: 'https://trailerio.cc/pt/manifest.json', note: 'Use this if you want Portuguese trailer text.' },
+  { name: 'Russian', url: 'https://trailerio.cc/ru/manifest.json', note: 'Use this if you want Russian trailer text.' },
+  { name: 'Japanese', url: 'https://trailerio.cc/ja/manifest.json', note: 'Use this if you want Japanese trailer text.' },
+  { name: 'Korean', url: 'https://trailerio.cc/ko/manifest.json', note: 'Use this if you want Korean trailer text.' },
+  { name: 'Czech', url: 'https://trailerio.cc/cs/manifest.json', note: 'Use this if you want Czech trailer text.' },
+  { name: 'Hindi', url: 'https://trailerio.cc/hi/manifest.json', note: 'Use this if you want Hindi trailer text.' },
+  { name: 'Turkish', url: 'https://trailerio.cc/tr/manifest.json', note: 'Use this if you want Turkish trailer text.' },
+  { name: 'Arabic', url: 'https://trailerio.cc/ar/manifest.json', note: 'Use this if you want Arabic trailer text.' }
+];
+const migrationLinks = [
+  { name: 'Self-host', url: 'https://github.com/yodaluca23/Trakt-To-PMDB-Migration' },
+  { name: 'Website', url: '' }
 ];
 function platformGuide(btn, i) {
-  document.querySelectorAll('.gp-btn').forEach(b => b.classList.remove('on'));
+  btn.closest('.gp').querySelectorAll('.gp-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('platformOut').innerHTML = gt[i];
+}
+
+function migrationMode(btn, i) {
+  btn.closest('.gp').querySelectorAll('.gp-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  const out = document.getElementById('migrationOut');
+  out.innerHTML = migrationMarkup(migrationLinks[i]);
+  enhanceCopyPaths(out);
+}
+
+function trailerManifest(btn, i) {
+  btn.closest('.gp').querySelectorAll('.gp-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  const item = trailerLinks[i];
+  const out = document.getElementById('trailerManifestOut');
+  out.innerHTML = trailerManifestMarkup(item);
+  enhanceCopyPaths(out);
 }
 
 function togglePosterPreview(btn) {
