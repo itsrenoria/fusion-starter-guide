@@ -526,6 +526,151 @@ td:last-child { font-size:13px; }
 tr:last-child td { border-bottom:none; }
 tr:hover td { background:rgba(255,255,255,.02); }
 
+.faq-card {
+  display:flex; flex-direction:column; gap:18px;
+}
+.faq-top {
+  position:relative; overflow:hidden;
+  display:grid; grid-template-columns:minmax(0, 1.3fr) minmax(240px, .7fr);
+  gap:18px; align-items:stretch;
+  padding:24px;
+  border:1px solid var(--line); border-radius:18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015)),
+    radial-gradient(circle at top right, rgba(255,255,255,.09), transparent 38%),
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+}
+.faq-top::before {
+  content:''; position:absolute; inset:0 0 auto 0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+}
+.faq-lead {
+  padding:0; border:0; border-radius:0; background:none;
+}
+.faq-lead-k {
+  font-family:var(--mono); font-size:11px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--g2);
+  margin-bottom:10px;
+}
+.faq-lead p {
+  max-width:58ch; font-size:14.5px; color:var(--g); line-height:1.7;
+}
+.faq-pills {
+  display:flex; flex-wrap:wrap; gap:8px; align-content:flex-start;
+}
+.faq-pill {
+  display:inline-flex; align-items:center;
+  padding:8px 12px; border-radius:999px;
+  border:1px solid var(--line); background:rgba(255,255,255,.03);
+  font-family:var(--mono); font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--w2);
+}
+.faq-section + .faq-section {
+  border-top:0;
+}
+.faq-section {
+  position:relative; overflow:hidden;
+  border:1px solid var(--line); border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015));
+}
+.faq-section::before {
+  content:''; position:absolute; inset:0 0 auto 0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+}
+.faq-section-head {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:16px; padding:22px 24px 18px;
+}
+.faq-section-k {
+  font-family:var(--mono); font-size:11px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--g2);
+  margin-bottom:8px;
+}
+.faq-section-title {
+  font-size:22px; font-weight:600; letter-spacing:-.03em;
+  color:var(--w); line-height:1.05;
+}
+.faq-section-copy {
+  margin-top:8px; max-width:52ch;
+  font-size:14px; color:var(--g); line-height:1.65;
+}
+.faq-section-no {
+  flex-shrink:0; font-family:var(--mono); font-size:12px; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--g2);
+  padding:8px 10px; border-radius:8px;
+  border:1px solid var(--line); background:rgba(255,255,255,.03);
+}
+.faq-section-head + .faq-item {
+  border-top:1px solid var(--line);
+}
+.faq-item + .faq-item { border-top:1px solid var(--line); }
+.faq-summary {
+  display:grid; grid-template-columns:1fr auto; gap:14px; align-items:start;
+  padding:18px 24px; cursor:pointer; list-style:none;
+  transition:background .2s;
+}
+.faq-summary::-webkit-details-marker { display:none; }
+.faq-summary:hover { background:rgba(255,255,255,.018); }
+.faq-q {
+  font-size:16px; font-weight:600; color:var(--w2);
+  letter-spacing:-.015em; line-height:1.4;
+}
+.faq-toggle {
+  position:relative; width:30px; height:30px; flex-shrink:0;
+  border:1px solid var(--line-h); border-radius:8px;
+  background:rgba(255,255,255,.04);
+}
+.faq-toggle::before,
+.faq-toggle::after {
+  content:''; position:absolute; left:50%; top:50%;
+  width:12px; height:1.5px; border-radius:999px; background:var(--g);
+  transform:translate(-50%, -50%);
+  transition:transform .24s ease, opacity .24s ease, background .2s ease;
+}
+.faq-toggle::after {
+  transform:translate(-50%, -50%) rotate(90deg);
+}
+.faq-item[open] .faq-summary { background:rgba(255,255,255,.02); }
+.faq-item[open] .faq-toggle {
+  border-color:var(--line-h); background:rgba(255,255,255,.07);
+}
+.faq-item[open] .faq-toggle::before { background:var(--w); }
+.faq-item[open] .faq-toggle::after {
+  opacity:0; transform:translate(-50%, -50%) rotate(90deg) scaleX(.2);
+}
+.faq-body {
+  padding:0 24px 22px;
+  font-size:14.5px; color:var(--g); line-height:1.7;
+}
+.faq-body p + p { margin-top:12px; }
+.faq-body ul,
+.faq-body ol {
+  margin:12px 0 0 20px;
+}
+.faq-body li + li { margin-top:8px; }
+.faq-body li::marker {
+  color:var(--w2);
+  font-family:var(--mono);
+}
+.faq-body strong,
+.faq-body b { color:var(--w2); font-weight:600; }
+.faq-body code {
+  font-family:var(--mono); font-size:.95em; color:var(--w2);
+  padding:2px 6px; border-radius:5px;
+  border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04);
+}
+@media(max-width:920px) {
+  .faq-top { grid-template-columns:1fr; }
+}
+@media(max-width:600px) {
+  .faq-top,
+  .faq-section-head,
+  .faq-summary,
+  .faq-body { padding-left:18px; padding-right:18px; }
+  .faq-section-title { font-size:20px; }
+  .faq-q { font-size:15px; }
+}
+
 footer {
   padding:48px clamp(24px,6vw,80px); border-top:1px solid var(--line);
   display:flex; justify-content:space-between; align-items:center;
@@ -575,6 +720,7 @@ footer .fb { font-weight:600; color:var(--g); }
     <a href="#kit">Starter Kit</a>
     <a href="#ratings">Ratings</a>
     <a href="#extras">Extras</a>
+    <a href="#faq">FAQ</a>
     <a href="#ref">Quick Links</a>
   </div>
   <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()">
@@ -590,7 +736,8 @@ footer .fb { font-weight:600; color:var(--g); }
   <a href="#kit" onclick="closeMenu()"><span class="mob-num">04</span> Starter Kit</a>
   <a href="#ratings" onclick="closeMenu()"><span class="mob-num">05</span> Ratings</a>
   <a href="#extras" onclick="closeMenu()"><span class="mob-num">06</span> Extras</a>
-  <a href="#ref" onclick="closeMenu()"><span class="mob-num">07</span> Quick Links</a>
+  <a href="#faq" onclick="closeMenu()"><span class="mob-num">07</span> FAQ</a>
+  <a href="#ref" onclick="closeMenu()"><span class="mob-num">08</span> Quick Links</a>
 </div>
 
 <header class="header">
@@ -946,9 +1093,308 @@ footer .fb { font-weight:600; color:var(--g); }
   </div>
 </section>
 
+<section class="s" id="faq">
+  <div class="s-inner rv">
+    <div class="sh"><span class="sh-num">07</span><h2 class="sh-title">FAQ</h2></div>
+    <p class="sh-desc">The questions people usually run into right after the starter setup: what Fusion actually is, how tracking behaves, which metadata defaults make sense, and which settings are easiest to miss.</p>
+  </div>
+
+  <div class="s-wide rv">
+    <div class="faq-card">
+      <div class="faq-top">
+        <div class="faq-lead">
+          <div class="faq-lead-k">What This Covers</div>
+          <p>This section complements the main guide instead of repeating it. It focuses on app behavior, account choices, metadata, collections, and the small settings that make Fusion feel right once the first install is already done.</p>
+        </div>
+        <div class="faq-pills" aria-label="FAQ categories">
+          <span class="faq-pill">General</span>
+          <span class="faq-pill">Tracking</span>
+          <span class="faq-pill">Metadata</span>
+          <span class="faq-pill">Collections</span>
+          <span class="faq-pill">Playback</span>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <div class="faq-section-head">
+          <div>
+            <div class="faq-section-k">Foundation</div>
+            <h3 class="faq-section-title">General</h3>
+            <p class="faq-section-copy">What Fusion is, what it supports, and what it does not do for you out of the box.</p>
+          </div>
+          <div class="faq-section-no">01</div>
+        </div>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">What is Fusion?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Fusion is a media companion app for Apple platforms. It brings discovery, organization, watch tracking, collections, and home-screen customization into one interface, with optional third-party extensions if you want to add your own sources.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Which devices does Fusion support?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Fusion supports iPhone, iPad, Mac, and Apple TV. Support is currently limited to <code>iOS/iPadOS</code>, <code>macOS</code>, and <code>tvOS 26+</code>.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Does Fusion include or host any content?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>No. Fusion does not provide, host, stream, or distribute media content. It is a media browser and organizer. Any extensions or content sources are added by the user, and Fusion assumes those sources are legal and user-controlled.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Are addons built into Fusion?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>No. Addons are user-configured URLs that you add yourself in <code>Settings &gt; Addons</code>. Fusion does not bundle or control what those endpoints provide.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-section">
+        <div class="faq-section-head">
+          <div>
+            <div class="faq-section-k">Mapping</div>
+            <h3 class="faq-section-title">Metadata and Anime</h3>
+            <p class="faq-section-copy">The defaults that usually work best, plus the anime-specific gotchas behind Fusion's warnings.</p>
+          </div>
+          <div class="faq-section-no">02</div>
+        </div>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Which metadata source should I use?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>The best default depends on the type of media:</p>
+            <ul>
+              <li><b>Movies:</b> TMDB is usually the best primary source.</li>
+              <li><b>Series:</b> TMDB or TVDB both work well, depending on which structure you prefer.</li>
+              <li><b>Anime:</b> TVDB is the safest default for episode and season structure.</li>
+            </ul>
+            <p>If you want more control, Fusion also lets you set field-specific overrides for things like hero images, episode backgrounds, synopsis, and structure.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Why does Fusion warn me when I change anime metadata or structure sources?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Because anime numbering can differ between providers. Changing the structure or image source away from the recommended setup can break episode mapping, make season ordering look wrong, or cause watch-status sync to appear incorrect.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Where do anime watched checkmarks come from?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>You can choose the source in <code>Settings &gt; Progress &gt; Anime Tracking &gt; Show Watched From</code>. The options are <code>Local</code>, <code>Trakt</code>, <code>AniList</code>, or <code>All Sources</code>. If you watch across multiple devices or apps, <code>All Sources</code> is usually the safest choice.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-section">
+        <div class="faq-section-head">
+          <div>
+            <div class="faq-section-k">Accounts and Sync</div>
+            <h3 class="faq-section-title">Tracking</h3>
+            <p class="faq-section-copy">How Fusion stores progress, how to wire Trakt cleanly, and what to check when Continue Watching looks wrong.</p>
+          </div>
+          <div class="faq-section-no">03</div>
+        </div>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Should I use Local, Trakt, or AniList progress?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Use <code>Local</code> if you want device-only progress with no external account. Use <code>Trakt</code> if you already track most of your watching there. Use <code>AniList</code> if anime is your main focus and you want anime-first tracking.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">How do I connect Trakt?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Open <code>Settings &gt; Accounts &gt; Trakt</code> and choose <code>Connect to Trakt</code>.</p>
+            <ul>
+              <li>On iPhone and Mac, Fusion opens a browser so you can sign in and approve access.</li>
+              <li>On Apple TV, Fusion gives you a code and verification URL to finish on another device.</li>
+            </ul>
+            <p>Once connected, the Trakt status should show as connected and the Trakt sync options under <code>Settings &gt; Progress &gt; Trakt</code> should become available.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Why is Continue Watching not updating?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Check these in order:</p>
+            <ol>
+              <li>Confirm your storage mode in <code>Settings &gt; Progress</code>.</li>
+              <li>If you use Trakt, make sure your Trakt account is connected.</li>
+              <li>In <code>Settings &gt; Progress &gt; Trakt</code>, turn on <code>Scrobble Playback</code> and run <code>Sync Now</code>.</li>
+              <li>If you use external players, enable <code>Sync After External Playback</code>.</li>
+              <li>If it is still wrong, switch to <code>Local</code>, test one playback, then switch back and sync again.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">How can I tell whether progress was actually saved?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Play something briefly, exit playback normally, then check <code>Home &gt; Continue Watching</code>. If you use Trakt, also open <code>Settings &gt; Progress &gt; Trakt</code>, run <code>Sync Now</code>, and confirm the last sync time updates.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">What does Source Switcher do?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Source Switcher changes which progress sources feed Continue Watching and related views. Common setups include <code>All Local</code>, <code>All Trakt</code>, <code>Trakt + AniList</code>, or <code>Anime Local + AniList</code>. It also gives quick access to sync and cache-clear actions.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Where does the watchlist button save items?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>That depends on the provider you choose in <code>Settings &gt; Progress</code>. Fusion can use Trakt or PublicMetaDB for the watchlist button. If Trakt is connected, it is the default association. One useful limitation to know: Trakt watchlists have a 100-item cap.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-section">
+        <div class="faq-section-head">
+          <div>
+            <div class="faq-section-k">Layout</div>
+            <h3 class="faq-section-title">Home and Customization</h3>
+            <p class="faq-section-copy">Collections, widgets, and the settings people usually discover too late.</p>
+          </div>
+          <div class="faq-section-no">04</div>
+        </div>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">What are collections in Fusion?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Collections are custom folders on your Home screen. Each collection tile can have its own title, image, tile shape, and one or more content sources. When opened, Fusion shows a grid built from those sources.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">What happens if a collection has multiple sources?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>If a collection has one source, Fusion opens that source directly. If it has two or more, Fusion merges them into a single combined grid. If it has no sources, the collection will show as not configured.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Can I disable a widget without deleting it?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>No. Fusion does not currently have a true disable toggle for widgets. If you want to hide one, you need to delete it and add or import it again later.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">What settings do people commonly miss after first setup?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <ul>
+              <li><code>Progress Storage</code> and whether it should be Local or Trakt</li>
+              <li><code>Watchlist Button</code> provider</li>
+              <li><code>Video Player</code> and per-media-type player selection</li>
+              <li><code>Autoplay Next Episode</code></li>
+              <li><code>Remember Last Source</code></li>
+              <li><code>Up Next</code> timing</li>
+              <li>Subtitle presets, size, colors, and position</li>
+              <li>Addon timeout settings</li>
+              <li>iCloud sync</li>
+              <li>Continue Watching sync and push/pull options</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-section">
+        <div class="faq-section-head">
+          <div>
+            <div class="faq-section-k">Finish Touches</div>
+            <h3 class="faq-section-title">Playback</h3>
+            <p class="faq-section-copy">The little playback details that matter once the rest of the setup is already in place.</p>
+          </div>
+          <div class="faq-section-no">05</div>
+        </div>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">How do I customize subtitles?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>Go to <code>Settings &gt; Subtitles</code>. From there, you can use built-in presets or adjust subtitle size, position, and colors manually.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span class="faq-q">Will HDR video look washed out on an SDR Apple TV setup?</span>
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="faq-body">
+            <p>No. Fusion relies on Apple's system-level tone mapping on tvOS. If you play HDR content on an SDR display, Apple TV handles the tone mapping rather than leaving the image washed out.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="s" id="ref">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">07</span><h2 class="sh-title">Quick Links</h2></div>
+    <div class="sh"><span class="sh-num">08</span><h2 class="sh-title">Quick Links</h2></div>
     <p class="sh-desc">Everything important in one table. Install the basics first, then layer on the community resources.</p>
   </div>
 
