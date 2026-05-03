@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fusion Setup Guide</title>
-<script data-goatcounter="https://itsrenoria.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -51,8 +49,9 @@ body::after {
 }
 .fnav.show { opacity:1; translate:0 0; }
 .fnav-links {
-  display:flex; justify-content:center; gap:2px;
+  display:flex; justify-content:center; align-items:center; gap:2px;
 }
+.fnav-item { position:relative; display:flex; align-items:center; }
 .fnav a {
   padding:7px 16px; border-radius:6px;
   font-size:13px; font-weight:500; letter-spacing:.02em;
@@ -61,6 +60,26 @@ body::after {
 }
 .fnav a:hover { color:var(--w2); }
 .fnav a.on { background:rgba(255,255,255,.1); color:var(--w); }
+.fnav-sub {
+  position:absolute; top:calc(100% + 10px); left:50%;
+  width:260px; padding:8px;
+  display:grid; gap:2px;
+  background:rgba(15,15,15,.98); border:1px solid var(--line-h); border-radius:10px;
+  box-shadow:0 18px 48px rgba(0,0,0,.38);
+  opacity:0; transform:translate(-50%, -6px); pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease;
+}
+.fnav-sub::before {
+  content:''; position:absolute; left:0; right:0; top:-12px; height:12px;
+}
+.fnav-item:hover .fnav-sub,
+.fnav-item:focus-within .fnav-sub {
+  opacity:1; transform:translate(-50%, 0); pointer-events:auto;
+}
+.fnav-sub a {
+  display:block; padding:9px 10px; border-radius:7px;
+  font-size:12px; line-height:1.25; letter-spacing:0;
+}
 
 .burger {
   display:none; background:none; border:none; cursor:pointer;
@@ -96,6 +115,19 @@ body::after {
 .mob-menu a:hover, .mob-menu a.on { color:var(--w); background:rgba(255,255,255,.03); }
 .mob-menu a:hover::after, .mob-menu a.on::after { color:var(--g); transform:translateX(3px); }
 .mob-num { font-family:var(--mono); font-size:12px; color:var(--g2); margin-right:12px; font-weight:400; }
+.mob-sub {
+  display:grid; gap:2px; padding:4px 0 8px 32px;
+  border-bottom:1px solid var(--line);
+}
+.mob-menu .mob-sub a {
+  padding:10px 18px; border-bottom:none;
+  font-size:13px; color:var(--g);
+}
+.mob-menu .mob-sub a::after { font-size:16px; }
+.mob-menu .mob-sub a:hover,
+.mob-menu .mob-sub a.on {
+  color:var(--w2);
+}
 
 @media(max-width:640px) {
   .fnav { justify-content:space-between; padding:8px 16px; }
@@ -197,9 +229,14 @@ body::after {
 .ins-card {
   background:var(--card); border:1px solid var(--line); border-radius:10px;
   padding:clamp(20px,4vw,24px); transition:border-color .2s;
+  scroll-margin-top:76px;
 }
 @media(max-width:600px) { .ins-card { padding:20px 16px; } }
 .ins-card:hover { border-color:var(--line-h); }
+.ins-card.extra-hit {
+  border-color:rgba(255,255,255,.32);
+  box-shadow:0 0 0 1px rgba(255,255,255,.12);
+}
 .ins-name {
   font-size:18px; font-weight:600; color:var(--w); letter-spacing:-.01em;
   margin-bottom:14px;
@@ -275,7 +312,7 @@ body::after {
   font-size:14.5px; color:var(--g); line-height:1.7;
 }
 .ins-why b { color:var(--w2); font-weight:600; }
-.ins-why a, .co a, .unsup-note a, td a, .gp-out a {
+.ins-why a, .co a, .unsup-note a, td a, .gp-out a, .stp-body a {
   color:var(--w2); text-decoration-thickness:1px; text-underline-offset:3px;
 }
 
@@ -409,6 +446,7 @@ body::after {
 .stp-body { padding:20px 24px; }
 .stp-body h4 { font-size:16px; font-weight:600; color:var(--w); margin-bottom:6px; line-height:1.3; }
 .stp-body p { font-size:14.5px; color:var(--g); line-height:1.65; }
+.stp-body .ins-path { margin:10px 0 10px; }
 .pill {
   display:inline-block; font-family:var(--mono); font-size:12px; font-weight:700;
   color:var(--w); background:var(--g3); padding:3px 9px; border-radius:4px;
@@ -656,7 +694,7 @@ tr:hover td { background:rgba(255,255,255,.02); }
 }
 .faq-body strong,
 .faq-body b { color:var(--w2); font-weight:600; }
-.faq-body code {
+.faq-body code, .stp-body code {
   font-family:var(--mono); font-size:.95em; color:var(--w2);
   padding:2px 6px; border-radius:5px;
   border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04);
@@ -721,7 +759,19 @@ footer .fb { font-weight:600; color:var(--g); }
     <a href="#player">Player</a>
     <a href="#kit">Starter Kit</a>
     <a href="#ratings">Ratings</a>
-    <a href="#extras">Extras</a>
+    <div class="fnav-item">
+      <a href="#extras">Extras</a>
+      <div class="fnav-sub" aria-label="Extras subsections">
+        <a href="?extra=apple-tv-settings" data-extra-link="apple-tv-settings">Apple TV settings</a>
+        <a href="?extra=trailer-previews" data-extra-link="trailer-previews">Trailer previews</a>
+        <a href="?extra=poster-overlays" data-extra-link="poster-overlays">Poster overlays</a>
+        <a href="?extra=dynamic-collection-covers" data-extra-link="dynamic-collection-covers">Dynamic collection covers</a>
+        <a href="?extra=trakt-to-pmdb-migration" data-extra-link="trakt-to-pmdb-migration">Trakt to PMDB migration</a>
+        <a href="?extra=pmdb-migration" data-extra-link="pmdb-migration">PMDB Migration</a>
+        <a href="?extra=ai-powered-features" data-extra-link="ai-powered-features">AI-powered features</a>
+        <a href="?extra=migrating-from-omni" data-extra-link="migrating-from-omni">Migrating from Omni</a>
+      </div>
+    </div>
     <a href="#faq">FAQ</a>
     <a href="#ref">Quick Links</a>
   </div>
@@ -738,6 +788,16 @@ footer .fb { font-weight:600; color:var(--g); }
   <a href="#kit" onclick="closeMenu()"><span class="mob-num">04</span> Starter Kit</a>
   <a href="#ratings" onclick="closeMenu()"><span class="mob-num">05</span> Ratings</a>
   <a href="#extras" onclick="closeMenu()"><span class="mob-num">06</span> Extras</a>
+  <div class="mob-sub" aria-label="Extras subsections">
+    <a href="?extra=apple-tv-settings" data-extra-link="apple-tv-settings" onclick="closeMenu()">Apple TV settings</a>
+    <a href="?extra=trailer-previews" data-extra-link="trailer-previews" onclick="closeMenu()">Trailer previews</a>
+    <a href="?extra=poster-overlays" data-extra-link="poster-overlays" onclick="closeMenu()">Poster overlays</a>
+    <a href="?extra=dynamic-collection-covers" data-extra-link="dynamic-collection-covers" onclick="closeMenu()">Dynamic collection covers</a>
+    <a href="?extra=trakt-to-pmdb-migration" data-extra-link="trakt-to-pmdb-migration" onclick="closeMenu()">Trakt to PMDB migration</a>
+    <a href="?extra=pmdb-migration" data-extra-link="pmdb-migration" onclick="closeMenu()">PMDB Migration</a>
+    <a href="?extra=ai-powered-features" data-extra-link="ai-powered-features" onclick="closeMenu()">AI-powered features</a>
+    <a href="?extra=migrating-from-omni" data-extra-link="migrating-from-omni" onclick="closeMenu()">Migrating from Omni</a>
+  </div>
   <a href="#faq" onclick="closeMenu()"><span class="mob-num">07</span> FAQ</a>
   <a href="#ref" onclick="closeMenu()"><span class="mob-num">08</span> Quick Links</a>
 </div>
@@ -996,14 +1056,14 @@ footer .fb { font-weight:600; color:var(--g); }
 
   <div class="s-wide rv">
     <div class="ins">
-      <div class="ins-card">
+      <div class="ins-card" data-extra="apple-tv-settings">
         <div class="ins-name">Apple TV settings</div>
         <div class="ins-action"><span class="ins-action-label">If you own one</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Yuhasebe Guide</span></div>
         <div class="ins-path" data-copy="https://qooode.github.io/yuh-guide/"><span class="ins-path-label">Open</span><span class="crumb">qooode.github.io/yuh-guide</span></div>
         <p class="ins-why">This guide is a must-have for device-level Apple TV settings, made by none other than <span class="pill">yuhasebe</span>.</p>
       </div>
 
-      <div class="ins-card">
+      <div class="ins-card" data-extra="trailer-previews">
         <div class="ins-name">Trailer previews</div>
         <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Trailerio</span></div>
         <p class="ins-why">Install Trailerio in Fusion as an addon so the app can show trailer previews.</p>
@@ -1043,7 +1103,7 @@ footer .fb { font-weight:600; color:var(--g); }
         </div>
       </div>
 
-      <div class="ins-card">
+      <div class="ins-card" data-extra="poster-overlays">
         <div class="ins-name">Poster overlays</div>
         <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">BetterPosters</span></div>
         <div class="ins-path" data-copy="https://btttr.cc/"><span class="ins-path-label">Open</span><span class="crumb">btttr.cc</span></div>
@@ -1060,32 +1120,65 @@ footer .fb { font-weight:600; color:var(--g); }
         </div>
       </div>
 
-      <div class="ins-card">
+      <div class="ins-card" data-extra="dynamic-collection-covers">
+        <div class="ins-name">Dynamic collection covers</div>
+        <p class="ins-why">Use either tool to create dynamic Fusion collection covers from PMDB, Trakt, Stremio addons, or public Trakt lists, then export a Fusion-ready JSON URL.</p>
+        <div class="gp tight">
+          <div class="gp-btns">
+            <button class="gp-btn flag on" onclick="coverToolMode(this,0)">betterer-covers</button>
+            <button class="gp-btn flag" onclick="coverToolMode(this,1)">BetterCovers</button>
+          </div>
+          <div class="gp-inline" id="coverToolOut">
+            <div class="ins-path" data-copy="https://betterer-covers.itsrenoria.workers.dev">
+              <span class="ins-path-label">Open</span>
+              <span class="crumb">betterer-covers.itsrenoria.workers.dev</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ins-card" data-extra="trakt-to-pmdb-migration">
         <div class="ins-name">Trakt to PMDB migration</div>
         <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Migration Utility</span></div>
         <div class="gp tight">
           <div class="gp-btns">
-            <button class="gp-btn flag on" onclick="migrationMode(this,0)">Self-host</button>
-            <button class="gp-btn flag" onclick="migrationMode(this,1)">Website</button>
+            <button class="gp-btn flag on" onclick="migrationMode(this,0)">Website</button>
+            <button class="gp-btn flag" onclick="migrationMode(this,1)">Self-host</button>
           </div>
           <div class="gp-inline" id="migrationOut">
-            <div class="ins-path" data-copy="https://github.com/yodaluca23/Trakt-To-PMDB-Migration">
+            <div class="ins-path" data-copy="https://trakt-migration.yodaluca.dev/">
               <span class="ins-path-label">Open</span>
-              <span class="crumb">github.com/yodaluca23/Trakt-To-PMDB-Migration</span>
+              <span class="crumb">trakt-migration.yodaluca.dev</span>
             </div>
           </div>
         </div>
         <p class="ins-why">If you want to move from Trakt to PMDB, this utility migrates your watchlist, custom lists, watch history, and resume points.</p>
       </div>
 
-      <div class="ins-card">
-        <div class="ins-name">SyncMeta</div>
+      <div class="ins-card" data-extra="pmdb-migration">
+        <div class="ins-name">PMDB Migration</div>
         <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">PMDB Sync Tool</span></div>
         <div class="ins-path" data-copy="https://syncmeta.febsho.me"><span class="ins-path-label">Open</span><span class="crumb">syncmeta.febsho.me</span></div>
-        <p class="ins-why">SyncMeta automatically syncs your watchlists and lists from SIMKL, Trakt, AniList, and MDBList into PublicMetaDB. It also supports history import for Trakt and SIMKL, plus resume progress for Trakt.</p>
+        <p class="ins-why">PMDB Migration automatically syncs your watchlists and lists from SIMKL, Trakt, AniList, and MDBList into PublicMetaDB. It also supports history import for Trakt and SIMKL, plus resume progress for Trakt.</p>
       </div>
 
-      <div class="ins-card">
+      <div class="ins-card" data-extra="ai-powered-features">
+        <div class="ins-name">AI-powered features</div>
+        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Google AI Studio + OpenRouter</span></div>
+        <div class="steps">
+          <div class="stp"><div class="stp-n">1</div><div class="stp-body"><h4>Create a Google AI Studio API key</h4><div class="ins-path" data-copy="https://aistudio.google.com/app/api-keys"><span class="ins-path-label">Open</span><span class="crumb">aistudio.google.com/app/api-keys</span></div><p>Sign in, then click <b>Create API key</b>. Name it something like <code>OpenRouter</code>, choose or create a project, then copy the API key.</p></div></div>
+          <div class="stp"><div class="stp-n">2</div><div class="stp-body"><h4>Add it to OpenRouter</h4><div class="ins-path" data-copy="https://openrouter.ai/workspaces/default/byok"><span class="ins-path-label">Open</span><span class="crumb">openrouter.ai/workspaces/default/byok</span></div><p>Choose <b>Google AI Studio</b>, paste the key, enable <b>Enabled</b> and <b>Always use for this provider</b>, then click <b>Save</b>.</p></div></div>
+          <div class="stp"><div class="stp-n">3</div><div class="stp-body"><h4>Block Google Vertex</h4><div class="ins-path" data-copy="https://openrouter.ai/workspaces/default/guardrails"><span class="ins-path-label">Open</span><span class="crumb">openrouter.ai/workspaces/default/guardrails</span></div><p>Select <b>Workspace Guardrail &gt; Model &amp; Provider Access</b>, then under <b>Access Policy</b>, add <code>Google Vertex</code> to <b>Block Provider</b> and click <b>Save</b>.</p></div></div>
+          <div class="stp"><div class="stp-n">4</div><div class="stp-body"><h4>Create an OpenRouter API key</h4><div class="ins-path" data-copy="https://openrouter.ai/workspaces/default/keys"><span class="ins-path-label">Open</span><span class="crumb">openrouter.ai/workspaces/default/keys</span></div><p>Click <b>Create</b>, name it something like <code>Fusion</code>, set a small credit limit such as <code>$1</code>, leave everything else unchanged, then click <b>Create</b> and copy the key.</p></div></div>
+          <div class="stp"><div class="stp-n">5</div><div class="stp-body"><h4>Add it to Fusion</h4><p>In Fusion, go to <b>Account &gt; OpenRouter</b>, paste the OpenRouter API key, and set the model to: <code>google/gemini-3.1-flash-lite-preview-20260303</code>.</p></div></div>
+        </div>
+        <div class="co">
+          <div class="co-h">Free daily use</div>
+          Up to around 500 requests per day are free with this setup.
+        </div>
+      </div>
+
+      <div class="ins-card" data-extra="migrating-from-omni">
         <div class="ins-name">Migrating from Omni</div>
         <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Fusion Widget Manager</span></div>
         <div class="ins-path" data-copy="https://nobnobz.github.io/fusion-widget-manager/"><span class="ins-path-label">Open</span><span class="crumb">nobnobz.github.io/fusion-widget-manager</span></div>
@@ -1412,6 +1505,10 @@ footer .fb { font-weight:600; color:var(--g); }
           <tr><td>Trailerio</td><td>Trailer previews in the home hero section.</td><td><a href="https://trailerio.cc/manifest.json" target="_blank" rel="noreferrer">manifest.json</a></td></tr>
           <tr><td>PMDB</td><td>Used for the ratings icon flow and also works as a Trakt alternative built by the Fusion developer.</td><td><a href="https://publicmetadb.com" target="_blank" rel="noreferrer">publicmetadb.com</a></td></tr>
           <tr><td>Apple TV settings</td><td>Extra Apple TV device tuning if you own one.</td><td><a href="https://qooode.github.io/yuh-guide/" target="_blank" rel="noreferrer">Yuhasebe Guide</a></td></tr>
+          <tr><td>Dynamic collection covers</td><td>Build Fusion-ready dynamic collection cover JSON.</td><td><a href="https://betterer-covers.itsrenoria.workers.dev" target="_blank" rel="noreferrer">betterer-covers</a> / <a href="https://btttr.cc/covers" target="_blank" rel="noreferrer">BetterCovers</a></td></tr>
+          <tr><td>Trakt to PMDB migration</td><td>Migrate Trakt watchlist, custom lists, history, and resume points to PMDB.</td><td><a href="https://trakt-migration.yodaluca.dev/" target="_blank" rel="noreferrer">website</a> / <a href="https://github.com/yodaluca23/Trakt-To-PMDB-Migration" target="_blank" rel="noreferrer">self-host</a></td></tr>
+          <tr><td>PMDB Migration</td><td>Sync lists and watch activity from other services into PublicMetaDB.</td><td><a href="https://syncmeta.febsho.me" target="_blank" rel="noreferrer">syncmeta.febsho.me</a></td></tr>
+          <tr><td>Omni migration</td><td>Convert Omni snapshots into Fusion widgets.</td><td><a href="https://nobnobz.github.io/fusion-widget-manager/" target="_blank" rel="noreferrer">Fusion Widget Manager</a></td></tr>
         </tbody>
       </table>
     </div>
@@ -1446,12 +1543,17 @@ addEventListener('scroll', () => {
 const fnav = document.getElementById('fnav');
 addEventListener('scroll', () => { fnav.classList.toggle('show', scrollY > 200); });
 
-const allNavLinks = document.querySelectorAll('.fnav-links a');
+const allNavLinks = document.querySelectorAll('.fnav-links > a, .fnav-item > a');
 const sects = document.querySelectorAll('.s[id]');
 addEventListener('scroll', () => {
   let cur = '';
   sects.forEach(s => { if (scrollY >= s.offsetTop - 200) cur = s.id; });
-  allNavLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+  const activeExtra = getActiveExtraSlug();
+  allNavLinks.forEach(a => {
+    const href = a.getAttribute('href');
+    a.classList.toggle('on', href === '#' + cur || (href === '#extras' && activeExtra));
+  });
+  setActiveExtraLink(activeExtra);
 });
 
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); }), { threshold: .05, rootMargin: '0px 0px -40px 0px' });
@@ -1470,11 +1572,16 @@ function closeMenu() {
   document.body.style.overflow = '';
 }
 
-const mobLinks = document.querySelectorAll('.mob-menu a');
+const mobLinks = document.querySelectorAll('.mob-menu > a');
 addEventListener('scroll', () => {
   let cur = '';
   sects.forEach(s => { if (scrollY >= s.offsetTop - 200) cur = s.id; });
-  mobLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
+  const activeExtra = getActiveExtraSlug();
+  mobLinks.forEach(a => {
+    const href = a.getAttribute('href');
+    a.classList.toggle('on', href === '#' + cur || (href === '#extras' && activeExtra));
+  });
+  setActiveExtraLink(activeExtra);
 });
 
 function copyIconMarkup() {
@@ -1600,13 +1707,25 @@ const trailerLinks = [
   { name: 'Arabic', url: 'https://trailerio.cc/ar/manifest.json', note: 'Use this if you want Arabic trailer text.' }
 ];
 const migrationLinks = [
-  { name: 'Self-host', url: 'https://github.com/yodaluca23/Trakt-To-PMDB-Migration' },
-  { name: 'Website', url: '' }
+  { name: 'Website', url: 'https://trakt-migration.yodaluca.dev/' },
+  { name: 'Self-host', url: 'https://github.com/yodaluca23/Trakt-To-PMDB-Migration' }
+];
+const coverToolLinks = [
+  { name: 'betterer-covers', url: 'https://betterer-covers.itsrenoria.workers.dev' },
+  { name: 'BetterCovers', url: 'https://btttr.cc/covers' }
 ];
 function platformGuide(btn, i) {
   btn.closest('.gp').querySelectorAll('.gp-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('platformOut').innerHTML = gt[i];
+}
+
+function coverToolMode(btn, i) {
+  btn.closest('.gp').querySelectorAll('.gp-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  const out = document.getElementById('coverToolOut');
+  out.innerHTML = migrationMarkup(coverToolLinks[i]);
+  enhanceCopyPaths(out);
 }
 
 function migrationMode(btn, i) {
@@ -1630,6 +1749,114 @@ function togglePosterPreview(btn) {
   const wrap = btn.closest('.pv');
   wrap.classList.toggle('open');
 }
+
+function normalizeExtraSlug(value) {
+  return (value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/^#?extras?[:/-]?/, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function setActiveExtraLink(slug) {
+  document.querySelectorAll('[data-extra-link]').forEach(link => {
+    link.classList.toggle('on', link.dataset.extraLink === slug);
+  });
+}
+
+function getActiveExtraSlug() {
+  const extras = document.getElementById('extras');
+  if (!extras || scrollY < extras.offsetTop - 200 || scrollY >= extras.offsetTop + extras.offsetHeight - 80) {
+    return '';
+  }
+
+  const cards = Array.from(document.querySelectorAll('#extras .ins-card[data-extra]'));
+  let current = '';
+  cards.forEach(card => {
+    const cardTop = card.getBoundingClientRect().top + scrollY;
+    if (scrollY >= cardTop - 180) current = card.dataset.extra;
+  });
+  return current;
+}
+
+function focusExtraSlug(slug, updateUrl = false) {
+  const requested = normalizeExtraSlug(slug);
+  if (!requested) return;
+
+  const target = document.querySelector('#extras .ins-card[data-extra="' + requested + '"]');
+  if (!target) return;
+
+  if (updateUrl) {
+    const url = new URL(location.href);
+    url.searchParams.set('extra', requested);
+    url.hash = '';
+    history.pushState(null, '', url);
+  }
+
+  setTimeout(() => {
+    const top = target.getBoundingClientRect().top + scrollY - 76;
+    const prevScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    scrollTo(0, top);
+    document.documentElement.style.scrollBehavior = prevScrollBehavior;
+    target.classList.add('extra-hit');
+    setActiveExtraLink(requested);
+    setTimeout(() => target.classList.remove('extra-hit'), 2400);
+  }, updateUrl ? 0 : 180);
+}
+
+function focusExtraFromParam() {
+  if (location.hash) return;
+
+  const params = new URLSearchParams(location.search);
+  focusExtraSlug(params.get('extra'));
+}
+
+function focusSectionHash(hash, updateUrl = false) {
+  if (!hash || hash === '#') return;
+
+  const target = document.querySelector(hash);
+  if (!target) return;
+
+  if (updateUrl) {
+    const url = new URL(location.href);
+    url.search = '';
+    url.hash = hash;
+    history.pushState(null, '', url);
+  }
+
+  target.scrollIntoView({ block: 'start' });
+  setActiveExtraLink('');
+}
+
+document.querySelectorAll('[data-extra-link]').forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    focusExtraSlug(link.dataset.extraLink, true);
+  });
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', event => {
+    const hash = link.getAttribute('href');
+    if (!hash || hash === '#') return;
+
+    event.preventDefault();
+    focusSectionHash(hash, true);
+  });
+});
+
+addEventListener('popstate', () => {
+  if (location.hash) {
+    focusSectionHash(location.hash);
+    return;
+  }
+
+  focusExtraFromParam();
+});
+
+focusExtraFromParam();
 </script>
 </body>
 </html>

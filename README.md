@@ -4,7 +4,7 @@ A short setup guide for Fusion, focused on a clean first build with AIOStreams, 
 
 ## Live Guide
 
-[https://itsrenoria.github.io/fusion-starter-guide/](https://itsrenoria.github.io/fusion-starter-guide/)
+[https://guide.betterer.cc/](https://guide.betterer.cc/)
 
 ## Contributing
 
