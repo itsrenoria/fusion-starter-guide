@@ -1,6 +1,6 @@
 # Fusion Starter Guide
 
-A short setup guide for Fusion, focused on a clean first build with AIOStreams, the Starter Kit, ratings, and a few worthwhile extras.
+A short setup guide for Fusion, focused on a clean first build with the Starter Kit, player settings, ratings, and a few worthwhile extras.
 
 ## Live Guide
 

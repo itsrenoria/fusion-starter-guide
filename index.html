@@ -192,36 +192,6 @@ body::after {
   font-size:16px; color:var(--g); line-height:1.65; max-width:560px;
   margin-bottom:clamp(32px,5vh,56px);
 }
-.start-jump {
-  display:flex; gap:10px; flex-wrap:wrap;
-  margin-top:-10px; margin-bottom:clamp(32px,5vh,56px);
-}
-.start-jump-btn {
-  display:inline-flex; align-items:center; gap:12px;
-  padding:12px 16px; border-radius:8px;
-  border:1px solid var(--line-h); background:rgba(255,255,255,.03);
-  color:var(--w2); text-decoration:none; transition:all .2s;
-}
-.start-jump-btn:hover {
-  border-color:var(--g2); color:var(--w); background:rgba(255,255,255,.05);
-}
-.start-jump-btn.primary {
-  background:var(--w); color:var(--bg); border-color:var(--w);
-}
-.start-jump-btn.primary .start-jump-k,
-.start-jump-btn.primary .start-jump-v { color:inherit; }
-.start-jump-k {
-  font-family:var(--mono); font-size:11px; font-weight:600;
-  letter-spacing:.08em; text-transform:uppercase; color:var(--g2);
-}
-.start-jump-v {
-  font-size:14px; font-weight:600; letter-spacing:-.01em; color:var(--w2);
-}
-@media(max-width:600px) {
-  .start-jump { gap:12px; }
-  .start-jump-btn { width:100%; justify-content:space-between; }
-}
-
 .ins {
   display:flex; flex-direction:column; gap:clamp(16px, 3vw, 12px);
   counter-reset: ins-step;
@@ -755,8 +725,6 @@ footer .fb { font-weight:600; color:var(--g); }
 <nav class="fnav" id="fnav">
   <span class="fnav-brand-m">itsrenoria</span>
   <div class="fnav-links">
-    <a href="#start">Start Here</a>
-    <a href="#streams">AIOStreams</a>
     <a href="#player">Player</a>
     <a href="#kit">Starter Kit</a>
     <a href="#ratings">Ratings</a>
@@ -783,12 +751,10 @@ footer .fb { font-weight:600; color:var(--g); }
 </nav>
 
 <div class="mob-menu" id="mobMenu">
-  <a href="#start" onclick="closeMenu()"><span class="mob-num">01</span> Start Here</a>
-  <a href="#streams" onclick="closeMenu()"><span class="mob-num">02</span> AIOStreams</a>
-  <a href="#player" onclick="closeMenu()"><span class="mob-num">03</span> Player</a>
-  <a href="#kit" onclick="closeMenu()"><span class="mob-num">04</span> Starter Kit</a>
-  <a href="#ratings" onclick="closeMenu()"><span class="mob-num">05</span> Ratings</a>
-  <a href="#extras" onclick="closeMenu()"><span class="mob-num">06</span> Extras</a>
+  <a href="#player" onclick="closeMenu()"><span class="mob-num">01</span> Player</a>
+  <a href="#kit" onclick="closeMenu()"><span class="mob-num">02</span> Starter Kit</a>
+  <a href="#ratings" onclick="closeMenu()"><span class="mob-num">03</span> Ratings</a>
+  <a href="#extras" onclick="closeMenu()"><span class="mob-num">04</span> Extras</a>
   <div class="mob-sub" aria-label="Extras subsections">
     <a href="?extra=apple-tv-settings" data-extra-link="apple-tv-settings" onclick="closeMenu()">Apple TV settings</a>
     <a href="?extra=trailer-previews" data-extra-link="trailer-previews" onclick="closeMenu()">Trailer previews</a>
@@ -799,84 +765,20 @@ footer .fb { font-weight:600; color:var(--g); }
     <a href="?extra=ai-powered-features" data-extra-link="ai-powered-features" onclick="closeMenu()">AI-powered features</a>
     <a href="?extra=migrating-from-omni" data-extra-link="migrating-from-omni" onclick="closeMenu()">Migrating from Omni</a>
   </div>
-  <a href="#faq" onclick="closeMenu()"><span class="mob-num">07</span> FAQ</a>
-  <a href="#ref" onclick="closeMenu()"><span class="mob-num">08</span> Quick Links</a>
+  <a href="#faq" onclick="closeMenu()"><span class="mob-num">05</span> FAQ</a>
+  <a href="#ref" onclick="closeMenu()"><span class="mob-num">06</span> Quick Links</a>
 </div>
 
 <header class="header">
   <p class="header-brand">itsrenoria</p>
   <h1>Fusion<br>Setup Guide</h1>
-  <p class="header-sub">The quickest clean setup for Fusion. Start with AIOStreams, then use the Starter Kit to make the homescreen, widgets and ratings pop. Once you're comfortable, head-over to Extras for some upgrades.</p>
+  <p class="header-sub">The quickest clean setup for Fusion. Tune the player, use the Starter Kit to make the homescreen, widgets and ratings pop, then head over to Extras for a few upgrades.</p>
   <div class="header-line"></div>
 </header>
 
-<section class="s" id="start">
-  <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">01</span><h2 class="sh-title">Start Here</h2></div>
-    <p class="sh-desc">This guide keeps the first setup intentionally simple. Fusion with AIOStreams is enough for a strong initial build. If you already have sources addons or AIOStreams configured, you can skip directly to the Player, Starter Kit, Ratings and Extras sections.</p>
-    <div class="start-jump">
-      <a class="start-jump-btn primary" href="#streams"><span class="start-jump-k">First time</span><span class="start-jump-v">Start with AIOStreams</span></a>
-      <a class="start-jump-btn" href="#player"><span class="start-jump-k">Already set up</span><span class="start-jump-v">Skip to Player</span></a>
-    </div>
-  </div>
-
-  <div class="s-wide rv">
-    <div class="ins">
-      <div class="ins-card">
-        <div class="ins-name">Keep the stack minimal</div>
-        <div class="ins-action"><span class="ins-action-label">Use</span><span class="ins-action-arrow">&rarr;</span><span class="ins-action-val">Fusion + AIOStreams with TorBox</span></div>
-        <p class="ins-why"><b>This guide does not include AIOMetadata as part of the default setup.</b> It is fully supported, but Fusion already covers a lot of the same ground with its built-in features and tends to feel faster and lighter across catalogues, metadata and search. If you self-host AIOMetadata, that gap gets smaller.</p>
-      </div>
-    </div>
-
-    <div class="co">
-      <div class="co-h">Debrid support</div>
-      TorBox is the recommended debrid provider for this guide, but it is not the only option. Other debrid services supported by AIOStreams, along with other debrid-focused sources addons, are fully supported in Fusion too.
-    </div>
-  </div>
-</section>
-
-<section class="s" id="streams">
-  <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">02</span><h2 class="sh-title">AIOStreams</h2></div>
-    <p class="sh-desc">For an awesome Fusion setup, this is the addon to start with. Use the official AIOStreams guide to get it set up cleanly.</p>
-  </div>
-
-  <div class="s-wide rv">
-    <div class="ins">
-      <div class="ins-card">
-        <div class="ins-name">First things first</div>
-        <div class="ins-path" data-copy="https://torbox.app/subscription?referral=eec0b6a7-60fb-4a99-8eed-771376f89995"><span class="ins-path-label">Sign up</span><span class="crumb">TorBox.app</span></div>
-        <p class="ins-why"><b>TorBox is the recommended debrid provider.</b> Go to <a href="https://torbox.app/subscription?referral=eec0b6a7-60fb-4a99-8eed-771376f89995" target="_blank" rel="noreferrer">TorBox.app</a> and sign up for the Essential plan ($33/year).</p>
-        <div class="co">
-          <div class="co-h">Referral code</div>
-          The link includes my referral code, but if it does not apply automatically, use <b>eec0b6a7-60fb-4a99-8eed-771376f89995</b>. If you use my referral code on your first purchase, we both get 7 bonus days for each month you buy, so buying 3 months gives each of us 21 extra days, and signing up for 1 year gives each of us 84 extra days.
-        </div>
-      </div>
-
-      <div class="ins-card">
-        <div class="ins-name">Open the official docs</div>
-        <div class="ins-path" data-copy="https://docs.aiostreams.viren070.me"><span class="ins-path-label">Open</span><span class="crumb">docs.aiostreams.viren070.me</span></div>
-        <p class="ins-why"><b>AIOStreams is the recommended sources addon.</b> Use the official AIOStreams documentation to configure the addon and generate the install URL you want to use in Fusion.</p>
-        <div class="co">
-          <div class="co-h">Recommended instance</div>
-          I also recommend <a href="https://fortheweak.cloud" target="_blank" rel="noreferrer">nhyyeb's</a> nightly instance at <a href="https://aiostreams-nightly.fortheweak.cloud/stremio/configure" target="_blank" rel="noreferrer">aiostreams-nightly.fortheweak.cloud</a>. He's both an admin in AIOStreams and a Founding Contributor of Fusion.
-        </div>
-      </div>
-
-      <div class="ins-card">
-        <div class="ins-name">Install AIOStreams</div>
-        <div class="ins-path"><span class="ins-path-label">Install</span><span class="crumb">Settings</span><span class="arr">&rsaquo;</span><span class="crumb">Addons</span></div>
-        <p class="ins-why">Once the docs give you the final AIOStreams URL, paste it into Fusion and you're off.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
 <section class="s" id="player">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">03</span><h2 class="sh-title">Player</h2></div>
+    <div class="sh"><span class="sh-num">01</span><h2 class="sh-title">Player</h2></div>
     <p class="sh-desc">Fusion gives you two playback options worth your time here: the built-in player for the native experience, and <a href="https://firecore.com/infuse" target="_blank" rel="noreferrer">Infuse</a> if you want the more premium Apple-device route.</p>
   </div>
 
@@ -922,7 +824,7 @@ footer .fb { font-weight:600; color:var(--g); }
 
 <section class="s" id="kit">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">04</span><h2 class="sh-title">Starter Kit</h2></div>
+    <div class="sh"><span class="sh-num">02</span><h2 class="sh-title">Starter Kit</h2></div>
     <p class="sh-desc">The Fusion Starter Kit is the easiest way to import homescreen layouts, widgets, collections, icon packs, and other resources.</p>
   </div>
 
@@ -1031,7 +933,7 @@ footer .fb { font-weight:600; color:var(--g); }
 
 <section class="s" id="ratings">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">05</span><h2 class="sh-title">Ratings Icons</h2></div>
+    <div class="sh"><span class="sh-num">03</span><h2 class="sh-title">Ratings Icons</h2></div>
     <p class="sh-desc">Fusion can show community rating labels on the hero, media details and on posters. To make that work cleanly, connect PMDB first, then import an icon pack and map it to your labels.</p>
   </div>
 
@@ -1055,7 +957,7 @@ footer .fb { font-weight:600; color:var(--g); }
 
 <section class="s" id="extras">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">06</span><h2 class="sh-title">Extras</h2></div>
+    <div class="sh"><span class="sh-num">04</span><h2 class="sh-title">Extras</h2></div>
     <p class="sh-desc">Once the main setup works, these are some upgrades that will make Fusion feel even more polished.</p>
   </div>
 
@@ -1195,7 +1097,7 @@ footer .fb { font-weight:600; color:var(--g); }
 
 <section class="s" id="faq">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">07</span><h2 class="sh-title">FAQ</h2></div>
+    <div class="sh"><span class="sh-num">05</span><h2 class="sh-title">FAQ</h2></div>
     <p class="sh-desc">The questions people usually run into right after the starter setup: what Fusion actually is, how tracking behaves, which metadata defaults make sense, and which settings are easiest to miss.</p>
   </div>
 
@@ -1494,8 +1396,8 @@ footer .fb { font-weight:600; color:var(--g); }
 
 <section class="s" id="ref">
   <div class="s-inner rv">
-    <div class="sh"><span class="sh-num">08</span><h2 class="sh-title">Quick Links</h2></div>
-    <p class="sh-desc">Everything important in one table. Install the basics first, then layer on the community resources.</p>
+    <div class="sh"><span class="sh-num">06</span><h2 class="sh-title">Quick Links</h2></div>
+    <p class="sh-desc">Everything important in one table. Set up the core pieces first, then layer on the community resources.</p>
   </div>
 
   <div class="s-wide rv">
@@ -1503,8 +1405,6 @@ footer .fb { font-weight:600; color:var(--g); }
       <table>
         <thead><tr><th>Resource</th><th>Use it for</th><th>Where to find it</th></tr></thead>
         <tbody>
-          <tr><td>AIOStreams</td><td>Recommended addon for a basic Fusion setup.</td><td><a href="https://docs.aiostreams.viren070.me" target="_blank" rel="noreferrer">docs.aiostreams.viren070.me</a></td></tr>
-          <tr><td>TorBox</td><td>Recommended debrid companion for AIOStreams.</td><td><a href="https://torbox.app/subscription?referral=eec0b6a7-60fb-4a99-8eed-771376f89995" target="_blank" rel="noreferrer">TorBox.app</a></td></tr>
           <tr><td>Starter Kit</td><td>Homescreen setups, widgets, collections, icon packs, and more.</td><td><a href="https://itsrenoria.github.io/fusion-starter-kit/" target="_blank" rel="noreferrer">itsrenoria.github.io</a></td></tr>
           <tr><td>BetterPosters</td><td>Poster overlays and visual polish.</td><td><a href="https://btttr.cc/" target="_blank" rel="noreferrer">btttr.cc</a></td></tr>
           <tr><td>Trailerio</td><td>Trailer previews in the home hero section.</td><td><a href="https://trailerio.cc/manifest.json" target="_blank" rel="noreferrer">manifest.json</a></td></tr>
